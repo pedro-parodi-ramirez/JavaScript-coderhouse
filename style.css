@@ -1,0 +1,42 @@
+*{
+    background-color:azure;
+}
+header{
+    font-size: 2em;
+    padding: 10px;
+}
+
+h1{
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    border: px solid black;
+    padding: 6px 4px;
+}
+
+#menuList{
+    width: 90%;
+    text-align: right;
+    list-style-type: none;
+}
+
+.configMovies{
+    text-align: center;
+    margin: 10px;
+}
+
+button{
+    font-size: 1.5em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+}
+
+.movieList{
+    font-size: 1.2em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+
