@@ -10,9 +10,9 @@
 <body>
     <header>
         <nav class="menu">
-            <h1>Charades - Dígalo con Mímica</h1>
+            <h1 class="menu__h1">Charades - Dígalo con Mímica</h1>
             <!-- <ul id="menuList">
-                <li class="menuList">
+                <li class="menu__list">
                     <a href="index.html">Inicio</a>
                     <a href="">Nosotros</a>
                     <a href="">Contacto</a>
@@ -21,9 +21,15 @@
         </nav>
     </header>
     <div class="configMovies">
-        <button id="listMovies" class="configMovies">Listar películas</button>
-        <button id="addMovie" class="configMovies">Agregar película</button>
-        <button id="deleteMovie" class="configMovies">Eliminar película</button><br>
+        <button id="listMovies">Listar películas</button>
+        <button id="addMovie">Agregar película</button>        
+        <button id="deleteMovie">Eliminar película</button>
+        
+        <div id="deleteParam" class="deleteParam">
+            <h3 class="deleteParam__h3">¿Qué película desea eliminar?</h3>
+            <input type="number" id="deleteIndex" class="deleteParam__input" placeholder="Índice de película">
+            <input type="submit" id="confirmDelete" class="deleteParam__input" value="Delete">
+        </div>
     </div>
     <div id="movieListDiv"></div>
     <script src="index.js"></script>

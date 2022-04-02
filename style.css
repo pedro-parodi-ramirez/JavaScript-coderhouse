@@ -1,26 +1,36 @@
 *{
     background-color:azure;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/****************************************/
+/*************** HEADER *****************/
+/****************************************/
+
 header{
     font-size: 2em;
     padding: 10px;
 }
 
-h1{
+.menu__h1{
     text-align: center;
 }
 
-a{
+/*a{
     text-decoration: none;
     border: px solid black;
     padding: 6px 4px;
 }
 
-#menuList{
+.menu__list{
     width: 90%;
     text-align: right;
     list-style-type: none;
-}
+}*/
+
+/****************************************/
+/**************** MENU ******************/
+/****************************************/
 
 .configMovies{
     text-align: center;
@@ -29,14 +39,46 @@ a{
 
 button{
     font-size: 1.5em;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 10px;
 }
 
+/****************************************/
+/************* MOVIE LIST ***************/
+/****************************************/
+
 .movieList{
     font-size: 1.2em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/***************************************/
+/******* DELETE MOVIE PARAMETERS *******/
+/***************************************/
 
+#deleteParam{
+    display: none;
+}
 
+.deleteParam__input{
+    font-size: 1em;
+    font-weight: bold;
+    color:black;
+    text-align: center;
+}
+
+#confirmDelete{
+    color:red;
+    padding: 7px 10px;
+}
+
+#deleteIndex{
+    width: 15%;
+    padding: 7px 10px;
+}
+
+#deleteIndex::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.deleteParam__h3{
+    margin: 30px auto 5px auto;
+}

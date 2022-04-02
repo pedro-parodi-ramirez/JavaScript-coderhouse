@@ -12,21 +12,28 @@ movieList.push(new Movie("El día que la tierra se detuvo", "Ciencia Ficción", 
 movieList.push(new Movie("La dama en el agua", "Fantasía", "M. Night Shyamalan"));
 movieList.push(new Movie("El rey león", "Película infantil animada", "Rob Minkoff - Rogers Allers"))
 
+/************************************************ AGREGAR PELÍCULA ************************************************/
+
 const buttonAddMovie = document.getElementById("addMovie");
 buttonAddMovie.addEventListener("click", addMovie);
+// addMoive() solicita la información de la película al usuario y la agrega a la lista de películas. Luego, muestra la lista completa en pantalla.
 function addMovie(){
     let newMovie, gender, director;
     
+    // Se solicita al usuario la información de la película
     newMovie = prompt("Ingrese nombre de película:");
     gender = prompt("Ingrese género:");
     director = prompt("Ingrese director:");
     
     movieList.push(new Movie(newMovie, gender, director));
-    return movieList;
+    listMovies();
 }
+
+/************************************************ LISTAR PELÍCULAS ************************************************/
 
 const buttonListMovies = document.getElementById("listMovies");
 buttonListMovies.addEventListener("click", listMovies);
+// listMovies() lista las películas en pantalla usando una lista ordenada
 function listMovies(){
     const movieListDiv = document.getElementById("movieListDiv");
     movieListDiv.innerHTML = "";
@@ -50,16 +57,30 @@ function listMovies(){
     movieListDiv.appendChild(newOL);
 }
 
+/************************************************ ELIMINAR PELÍCULA ************************************************/
 
 const buttonDeleteMovie = document.getElementById("deleteMovie");
 buttonDeleteMovie.addEventListener("click", deleteMovie);
+// deleteMovie() muestra en pantalla la lista de películas para que luego el usuario pueda decidir cual eliminar
 function deleteMovie(){
-    let index = parseInt(prompt("Ingrese índice de la película a eliminar"));
-    if( (index > 0) && (index <= movieList.length)){
+    listMovies();
+    document.getElementById("deleteParam").style.display = 'block';    
+}
+
+const buttonconfirmDelete = document.getElementById("confirmDelete");
+buttonconfirmDelete.addEventListener("click", confirmDelete);
+// confirmDelete() consulta al usuario cual película desea eliminar y la elimina. Luego, muestra la lista de películas en pantalla.
+function confirmDelete(){
+    const deleteIndex = document.getElementById("deleteIndex");
+    let index = parseInt(deleteIndex.value);
+    if( (index > 0) && (index <= movieList.length) ){
         const deleted = movieList.splice(index-1, 1);
-        alert("Película eliminada!")
+        alert("Película eliminada!");
+        listMovies();
     }
     else{
         alert("No se ha encontrado la película.");
     }
+    document.getElementById("deleteParam").style.display = 'none';
+    deleteIndex.value = "";
 }
