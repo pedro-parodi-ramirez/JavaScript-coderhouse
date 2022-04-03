@@ -4,19 +4,52 @@ class Movie{
         this.gender = gender;
         this.director = director;
     }
+
+    showInfo(){
+        return (this.name 
+                    + " - Gender: " + this.gender
+                    + " - Director: " + this.director);
+    }
 }
 
 const movieList = [];
-movieList.push(new Movie("El señor de los anillos", "Literatura fantástica", "Peter Jackson"));
+movieList.push(new Movie("El señor de los anillos", "Fantasía", "Peter Jackson"));
 movieList.push(new Movie("El día que la tierra se detuvo", "Ciencia Ficción", "Scott Derrickson"));
 movieList.push(new Movie("La dama en el agua", "Fantasía", "M. Night Shyamalan"));
-movieList.push(new Movie("El rey león", "Película infantil animada", "Rob Minkoff - Rogers Allers"))
+movieList.push(new Movie("El rey león", "Película infantil", "Rob Minkoff - Rogers Allers"));
+movieList.push(new Movie("La terminal", "Comedia", "Steven Spielberg"));
+movieList.push(new Movie("Legalmente rubia", "Comedia", "Robert Luketic"));
+
+/******************************************************************************************************************/
+/*************************************************** MENU PLAY ***************************************************/
+/******************************************************************************************************************/
+
+const buttonGetMovie = document.getElementById("buttonGetMovie");
+buttonGetMovie.addEventListener("click", generateRandomMovie);
+function generateRandomMovie(){
+    const outputRandomMovie = document.getElementById("outputMovie");
+    const randomMovieIndex = Math.round( Math.random() * (movieList.length-1) );
+    const randomMovie = movieList[randomMovieIndex];
+    outputRandomMovie.value = randomMovie.showInfo();
+}
+
+/******************************************************************************************************************/
+/************************************************** MENU MOVIES ***************************************************/
+/******************************************************************************************************************/
+
+const menuListMovies = document.getElementById("menuForMovies");
+menuListMovies.addEventListener("click", listMoviesOptions);
+// listMoviesOptions() muestra las opciones disponibles para la lista de películas
+function listMoviesOptions(){
+    document.querySelector(".getMovie").style.display = 'none';
+    document.querySelector(".configMovies").style.display = 'block';
+}
 
 /************************************************ AGREGAR PELÍCULA ************************************************/
 
 const buttonAddMovie = document.getElementById("addMovie");
 buttonAddMovie.addEventListener("click", addMovie);
-// addMoive() solicita la información de la película al usuario y la agrega a la lista de películas. Luego, muestra la lista completa en pantalla.
+// addMovie() solicita la información de la película al usuario y la agrega a la lista de películas. Luego, muestra la lista completa en pantalla.
 function addMovie(){
     let newMovie, gender, director;
     

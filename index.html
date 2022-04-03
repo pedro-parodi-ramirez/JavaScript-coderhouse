@@ -11,25 +11,28 @@
     <header>
         <nav class="menu">
             <h1 class="menu__h1">Charades - Dígalo con Mímica</h1>
-            <!-- <ul id="menuList">
-                <li class="menu__list">
+            <ul id="menuList">
+                <li class="menuList__li">
                     <a href="index.html">Inicio</a>
-                    <a href="">Nosotros</a>
-                    <a href="">Contacto</a>
+                    <button id="menuForMovies" class="menuList__li__button">Películas</button>
                 </li>
-            </ul> -->
+            </ul>
         </nav>
     </header>
     <div class="configMovies">
         <button id="listMovies">Listar películas</button>
         <button id="addMovie">Agregar película</button>        
         <button id="deleteMovie">Eliminar película</button>
-        
         <div id="deleteParam" class="deleteParam">
             <h3 class="deleteParam__h3">¿Qué película desea eliminar?</h3>
             <input type="number" id="deleteIndex" class="deleteParam__input" placeholder="Índice de película">
             <input type="submit" id="confirmDelete" class="deleteParam__input" value="Delete">
         </div>
+    </div>
+    <div class="getMovie">
+        <h3>Presione el botón para buscar una película aleatoriamente ...</h3>
+        <button id="buttonGetMovie">Buscar</button>
+        <output id="outputMovie">Película aleatoria</output>
     </div>
     <div id="movieListDiv"></div>
     <script src="index.js"></script>
