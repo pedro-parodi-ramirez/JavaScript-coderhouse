@@ -22,7 +22,7 @@ header{
     text-align: center;
 }
 
-a, .menuList__li__button{
+a, .menu__li__button{
     text-decoration: none;
     color:darkmagenta;
     font-size: 1em;
@@ -30,48 +30,84 @@ a, .menuList__li__button{
     padding: 6px 4px;
 }
 
-.menuList__li{
+.menu__li{
     width: 90%;
     text-align: right;
     list-style-type: none;
 }
 
 /*********************************************/
-/**************** MENU PLAY ******************/
+/*************** MENU JUGAR ******************/
 /*********************************************/
+.getMovie{
+    text-align: center;
+}
 
-#outputMovie{
+#buttonGetMovie{
+    margin : auto 50%;
+    display: block;
+}
+
+.getMovies__output{
     font-size: 1.25em;
     text-align: center;
     border: 1px dashed black;
     padding: 14px;
-    margin : 0px 5px;
+    margin : 50px 5px;
 }
 
 /*********************************************/
-/**************** MENU LIST ******************/
+/************** MENU PELÍCULAS ***************/
 /*********************************************/
 
 .configMovies{
     text-align: center;
     display: none;
-    margin: 10px;
+    padding: 10px;
 }
 
-/****************************************/
-/************* MOVIE LIST ***************/
-/****************************************/
-
 .movieList{
+    /* creado desde js */
     font-size: 1.2em;
 }
 
 /***************************************/
-/******* DELETE MOVIE PARAMETERS *******/
+/********** AGREGAR PELÍCULA ***********/
+/***************************************/
+
+.addMovieInputs{
+    display: none;
+    text-align: center;
+    margin: 30px;
+    padding: 0px 0px 0px 70px;
+}
+
+.addMovieInputs__input{
+    text-align: center;
+    margin: 2px auto;
+    padding: 5px;
+    font-size: 1em;
+}
+
+#confirmAddMovie{
+    color: green;
+}
+
+.labelAddMovie__label{
+    font-weight: bold;
+    margin: auto 110px auto 30px;
+}
+
+/***************************************/
+/********** ELIMINAR PELÍCULA **********/
 /***************************************/
 
 #deleteParam{
     display: none;
+}
+
+.deleteParam__h3{
+    margin: 30px auto 5px auto;
 }
 
 .deleteParam__input{
@@ -93,8 +129,4 @@ a, .menuList__li__button{
 
 #deleteIndex::-webkit-inner-spin-button{
     -webkit-appearance: none;
-}
-
-.deleteParam__h3{
-    margin: 30px auto 5px auto;
 }
