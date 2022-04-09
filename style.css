@@ -44,16 +44,13 @@ a, .menu__button{
 }
 
 .getMovie_button{
-    margin : auto 50%;
-    display: block;
+    margin : 20px 10px;
+    text-align: center;
 }
 
 .getMovie__output{
     font-size: 1.25em;
     text-align: center;
-    border: 1px dashed black;
-    padding: 14px;
-    margin : 50px 5px;
 }
 
 /***************************************************************************************************************************************/

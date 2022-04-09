@@ -67,10 +67,8 @@ function getMovie(){
     const randomMovieIndex = Math.round( Math.random() * (genderMovies.length-1) );
     const randomMovie = genderMovies[randomMovieIndex];
     
-    const outputMovieGender = document.getElementById("outputMovieGender");
-    outputMovieGender.value = randomGender;
     const outputMovie = document.getElementById("outputMovie");
-    outputMovie.value = randomMovie.showInfoReduced(true);
+    outputMovie.innerHTML = `<i>Género: ${randomGender}</i><br><strong>${randomMovie.showInfoReduced(true)}</strong>`;
 }
 
 /******************************************************************************************************************/
