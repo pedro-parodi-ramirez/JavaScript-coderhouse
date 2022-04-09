@@ -89,11 +89,11 @@ function showMoviesOptions(){
 
 const buttonAddMovie = document.getElementById("addMovie");
 buttonAddMovie.addEventListener("click", addMovie);
-// addMovie() muestra un formulario para que el usuario luego complete con información de la película
+// addMovie() muestra un formulario para que el usuario luego complete con información de la película a agregar
 function addMovie(){
     document.getElementById("addMovieInputs").style.display = 'block';
     document.getElementById("deleteParam").style.display = 'none';
-    const addMovieInputs = document.querySelectorAll(".addMovieInputs__input");
+    const addMovieInputs = document.querySelectorAll(".addMovie__input");
     for(const input of addMovieInputs){
         if(input.getAttribute("type") != "submit"){
             input.value = "";
@@ -110,8 +110,8 @@ function confirmAdd(){
     let gender = document.getElementById("movieGender").value;
     let director = document.getElementById("movieDirector").value;
     
+    // Se setea la primer letra de cada variable a mayúscula
     newMovie = newMovie.charAt(0).toUpperCase() + newMovie.slice(1);
-    gender = gender.charAt(0).toUpperCase() + gender.slice(1);
     director = director.charAt(0).toUpperCase() + director.slice(1);
     
     document.getElementById("addMovieInputs").style.display = 'none';
@@ -130,20 +130,14 @@ function listMovies(){
     document.getElementById("deleteParam").style.display = 'none';
 
     const movieListDiv = document.getElementById("movieListDiv");
-    movieListDiv.innerHTML = "";
+    movieListDiv.innerHTML = "<h2>Lista de películas almancedas:</h2>";
     
-    const newTitleH2 = document.createElement("h2");
-    const textTitleH2 = document.createTextNode("Lista de películas almancedas:");
-    newTitleH2.appendChild(textTitleH2);
-    movieListDiv.appendChild(newTitleH2);
-
     const newOL = document.createElement("ol");
-    let li, textLi;
+    let li;
     for(const element of movieList){
         li = document.createElement("li");
         li.setAttribute("class", "movieList");
-        textLi = document.createTextNode(element.showInfo());
-        li.appendChild(textLi);
+        li.innerHTML = element.showInfo();
         newOL.appendChild(li);
     };
     movieListDiv.appendChild(newOL);
@@ -156,6 +150,7 @@ buttonDeleteMovie.addEventListener("click", deleteMovie);
 // deleteMovie() muestra en pantalla la lista de películas para que luego el usuario pueda decidir cual eliminar
 function deleteMovie(){
     listMovies();
+    document.getElementById("addMovieInputs").style.display = 'none';
     document.getElementById("deleteParam").style.display = 'block';
 }
 

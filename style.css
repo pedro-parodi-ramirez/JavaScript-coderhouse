@@ -9,9 +9,9 @@ button{
     cursor: pointer;
 }
 
-/****************************************/
-/*************** HEADER *****************/
-/****************************************/
+/***************************************************************************************************************************************/
+/*************************************************************** HEADER ****************************************************************/
+/***************************************************************************************************************************************/
 
 header{
     font-size: 2em;
@@ -22,7 +22,7 @@ header{
     text-align: center;
 }
 
-a, .menu__li__button{
+a, .menu__button{
     text-decoration: none;
     color:darkmagenta;
     font-size: 1em;
@@ -36,19 +36,19 @@ a, .menu__li__button{
     list-style-type: none;
 }
 
-/*********************************************/
-/*************** MENU JUGAR ******************/
-/*********************************************/
+/***************************************************************************************************************************************/
+/************************************************************ MENU JUGAR ***************************************************************/
+/***************************************************************************************************************************************/
 .getMovie{
     text-align: center;
 }
 
-#buttonGetMovie{
+.getMovie_button{
     margin : auto 50%;
     display: block;
 }
 
-.getMovies__output{
+.getMovie__output{
     font-size: 1.25em;
     text-align: center;
     border: 1px dashed black;
@@ -56,9 +56,9 @@ a, .menu__li__button{
     margin : 50px 5px;
 }
 
-/*********************************************/
-/************** MENU PELÍCULAS ***************/
-/*********************************************/
+/***************************************************************************************************************************************/
+/*********************************************************** MENU PELÍCULAS ************************************************************/
+/***************************************************************************************************************************************/
 
 .configMovies{
     text-align: center;
@@ -66,60 +66,68 @@ a, .menu__li__button{
     padding: 10px;
 }
 
-.movieList{
-    /* creado desde js */
-    font-size: 1.2em;
-}
+/********************************************************** AGREGAR PELÍCULA ***********************************************************/
 
-/***************************************/
-/********** AGREGAR PELÍCULA ***********/
-/***************************************/
-
-.addMovieInputs{
+.addMovie__form{
     display: none;
     text-align: center;
     margin: 30px;
     padding: 0px 0px 0px 70px;
 }
 
-.addMovieInputs__input{
+.addMovie__input{
     text-align: center;
     margin: 2px auto;
     padding: 5px;
     font-size: 1em;
 }
 
-#confirmAddMovie{
+.addMovie__input--active{
+    text-align: center;
+    font-weight: bold;
     color: green;
+    margin: 2px auto;
+    padding: 5px;
+    font-size: 1em;
+    cursor: pointer;
 }
 
-.labelAddMovie__label{
+.addMovie__label{
     font-weight: bold;
     margin: auto 110px auto 30px;
 }
 
-/***************************************/
-/********** ELIMINAR PELÍCULA **********/
-/***************************************/
+/********************************************************** AGREGAR PELÍCULA ***********************************************************/
+
+.movieList{
+    /* creado desde js */
+    font-size: 1.2em;
+}
+
+/********************************************************* ELIMINAR PELÍCULA **********************************************************/
 
 #deleteParam{
     display: none;
 }
 
-.deleteParam__h3{
+.deleteMovie__h3{
     margin: 30px auto 5px auto;
 }
 
-.deleteParam__input{
+.deleteMovie__input{
     font-size: 1em;
     font-weight: bold;
     color:black;
     text-align: center;
 }
 
-#confirmDelete{
+.deleteMovie__input--active{
+    font-size: 1em;
+    font-weight: bold;
     color:red;
     padding: 7px 10px;
+    text-align: center;
+    cursor: pointer;
 }
 
 #deleteIndex{

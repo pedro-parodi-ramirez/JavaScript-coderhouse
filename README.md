@@ -1,3 +1,7 @@
+# desafíoComplementario 2
+
+Para cumplir con el desafío, se hizo uso de una clase 'Movie' y se creó un arreglo 'movieList', el cual almacena objetos tipo 'Movie'. Sobre el array 'movieList' se invocan los métodos 'push' y 'splice'.
+
 # proyectoIntegrador
 
 La idea del trabajo integrador será una app para jugar al "Dígalo con Mímica".

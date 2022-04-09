@@ -14,7 +14,7 @@
             <ul id="menuList">
                 <li class="menu__li">
                     <a href="index.html">Inicio</a>
-                    <button id="moviesOptions" class="menu__li__button">Películas</button>
+                    <button id="moviesOptions" class="menu__button">Películas</button>
                 </li>
             </ul>
         </nav>
@@ -23,34 +23,36 @@
         <button id="listMovies">Listar películas</button>
         <button id="addMovie">Agregar película</button>        
         <button id="deleteMovie">Eliminar película</button>
-        <form id="addMovieInputs" class="addMovieInputs">
-            <div class="labelAddMovie">
-                <label class="labelAddMovie__label">Nombre</label>
-                <label class="labelAddMovie__label">Género</label>
-                <label class="labelAddMovie__label">Director</label>
-            </div>
-            <input type="text" id="movieName" class="addMovieInputs__input">
-            <input list="genderOptions" id="movieGender" class="addMovieInputs__input">
-                <datalist id="genderOptions">
-                    <option value="Comedia"></option>
-                    <option value="Ciencia ficción"></option>
-                    <option value="Fantasía"></option>
-                    <option value="Película infantil"></option>                    
-                </datalist>
-            <input type="text" id="movieDirector" class="addMovieInputs__input">
-            <input type="submit" id="confirmAddMovie" class="addMovieInputs__input" value="Agregar">
-        </form>
-        <div id="deleteParam" class="configMovies__deleteParam">
-            <h3 class="deleteParam__h3">¿Qué película desea eliminar?</h3>
-            <input type="number" id="deleteIndex" class="deleteParam__input" placeholder="Índice de película">
-            <input type="submit" id="confirmDelete" class="deleteParam__input" value="Borrar">
+        <div class="addMovie">
+            <form id="addMovieInputs" class="addMovie__form">
+                <div>
+                    <label class="addMovie__label">Nombre</label>
+                    <label class="addMovie__label">Género</label>
+                    <label class="addMovie__label">Director</label>
+                </div>
+                <input type="text" id="movieName" class="addMovie__input">
+                <input list="genderOptions" id="movieGender" class="addMovie__input">
+                    <datalist id="genderOptions">
+                        <option value="Comedia"></option>
+                        <option value="Ciencia ficción"></option>
+                        <option value="Fantasía"></option>
+                        <option value="Película infantil"></option>
+                    </datalist>
+                <input type="text" id="movieDirector" class="addMovie__input">
+                <input type="submit" id="confirmAddMovie" class="addMovie__input--active" value="Agregar">
+            </form>
+        </div>        
+        <div id="deleteParam" class="deleteMovie">
+            <h3 class="deleteMovie__h3">¿Qué película desea eliminar?</h3>
+            <input type="number" id="deleteIndex" class="deleteMovie__input" placeholder="Índice de película">
+            <input type="submit" id="confirmDelete" class="deleteMovie__input--active" value="Borrar">
         </div>
     </div>
     <div class="getMovie">
         <h3>Presione el botón para buscar una película aleatoriamente ...</h3>
-        <button id="buttonGetMovie">Buscar</button><br>
-        <output id="outputMovieGender" class="getMovies__output">Película aleatoria</output>
-        <output id="outputMovie" class="getMovies__output"></output>
+        <button id="buttonGetMovie" class="getMovie_button">Buscar</button><br>
+        <output id="outputMovieGender" class="getMovie__output">Película aleatoria</output>
+        <output id="outputMovie" class="getMovie__output"></output>
     </div>
     <div id="movieListDiv"></div>
     <script src="index.js"></script>
