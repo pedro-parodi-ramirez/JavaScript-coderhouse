@@ -67,20 +67,31 @@ function getMovie(){
     const randomMovieIndex = Math.round( Math.random() * (genderMovies.length-1) );
     const randomMovie = genderMovies[randomMovieIndex];
     
+    const outputMovieGender = document.getElementById("outputMovieGender");
+    outputMovieGender.innerHTML = `<i>Género: ${randomGender}</i>`;
+    
     const outputMovie = document.getElementById("outputMovie");
-    outputMovie.innerHTML = `<i>Género: ${randomGender}</i><br><strong>${randomMovie.showInfoReduced(true)}</strong>`;
+    outputMovie.innerHTML = `<strong>${randomMovie.showInfoReduced(true)}</strong>`;
 }
 
 /******************************************************************************************************************/
 /*********************************************** MENU PELICULAS ***************************************************/
 /******************************************************************************************************************/
 
-const buttonMoviesOptions = document.getElementById("moviesOptions");
+const buttonMoviesOptions = document.getElementById("configMovies");
 buttonMoviesOptions.addEventListener("click", showMoviesOptions);
 // showMoviesOptions() muestra las opciones disponibles para la lista de películas
 function showMoviesOptions(){
-    document.querySelector(".getMovie").style.display = 'none';
-    document.querySelector(".configMovies").style.display = 'block';
+    document.getElementById("mainOptions").classList.add('d-none');
+    document.getElementById("moviesOptions").classList.remove('d-none');
+}
+
+const buttonBackToMenu = document.getElementById("backToMenu");
+buttonBackToMenu.addEventListener("click", backToMenu);
+// backToMenu() vuelve al menu principal, similar al hacer click en 'Inicio'
+function backToMenu(){
+    document.getElementById("moviesOptions").classList.add('d-none');
+    document.getElementById("mainOptions").classList.remove('d-none');    
 }
 
 /************************************************ AGREGAR PELÍCULA ************************************************/
@@ -89,19 +100,12 @@ const buttonAddMovie = document.getElementById("addMovie");
 buttonAddMovie.addEventListener("click", addMovie);
 // addMovie() muestra un formulario para que el usuario luego complete con información de la película a agregar
 function addMovie(){
-    document.getElementById("addMovieInputs").style.display = 'block';
-    document.getElementById("deleteParam").style.display = 'none';
-    const addMovieInputs = document.querySelectorAll(".addMovie__input");
-    for(const input of addMovieInputs){
-        if(input.getAttribute("type") != "submit"){
-            input.value = "";
-        }
-    }
+    document.getElementById("addMovieInputs").classList.remove('d-none');
+    document.getElementById("deleteParam").classList.add('d-none');
 }
 
 const buttonConfirmAdd = document.getElementById("confirmAddMovie");
 buttonConfirmAdd.addEventListener("click", confirmAdd);
-buttonConfirmAdd.addEventListener("click", (event) => event.preventDefault());
 // confirmAdd() toma la información ingresada por el usuario y agrega la película a la lista de películas
 function confirmAdd(){
     let newMovie = document.getElementById("movieName").value;
@@ -112,8 +116,14 @@ function confirmAdd(){
     newMovie = newMovie.charAt(0).toUpperCase() + newMovie.slice(1);
     director = director.charAt(0).toUpperCase() + director.slice(1);
     
-    document.getElementById("addMovieInputs").style.display = 'none';
+    document.getElementById("addMovieInputs").classList.add('d-none');
     movieList.push(new Movie(newMovie, gender, director));
+    alert("Película agregada!");
+
+    newMovie = document.getElementById("movieName").value = "";
+    gender = document.getElementById("movieGender").value = "";
+    director = document.getElementById("movieDirector").value = "";
+
     sortMovies(movieList);
     listMovies();
 }
@@ -124,17 +134,17 @@ const buttonListMovies = document.getElementById("listMovies");
 buttonListMovies.addEventListener("click", listMovies);
 // listMovies() lista las películas en pantalla usando una lista ordenada
 function listMovies(){
-    document.getElementById("addMovieInputs").style.display = 'none';
-    document.getElementById("deleteParam").style.display = 'none';
+    document.getElementById("movieListDiv").classList.remove('d-none');
+    document.getElementById("addMovieInputs").classList.add('d-none');
+    document.getElementById("deleteParam").classList.add('d-none');
 
     const movieListDiv = document.getElementById("movieListDiv");
-    movieListDiv.innerHTML = "<h2>Lista de películas almancedas:</h2>";
+    movieListDiv.innerHTML = "<br><h4>Lista de películas almancedas:</h4>";
     
     const newOL = document.createElement("ol");
     let li;
     for(const element of movieList){
         li = document.createElement("li");
-        li.setAttribute("class", "movieList");
         li.innerHTML = element.showInfo();
         newOL.appendChild(li);
     };
@@ -148,8 +158,8 @@ buttonDeleteMovie.addEventListener("click", deleteMovie);
 // deleteMovie() muestra en pantalla la lista de películas para que luego el usuario pueda decidir cual eliminar
 function deleteMovie(){
     listMovies();
-    document.getElementById("addMovieInputs").style.display = 'none';
-    document.getElementById("deleteParam").style.display = 'block';
+    document.getElementById("addMovieInputs").classList.add('d-none');
+    document.getElementById("deleteParam").classList.remove('d-none');
 }
 
 const buttonConfirmDelete = document.getElementById("confirmDelete");
@@ -166,6 +176,6 @@ function confirmDelete(){
     else{
         alert("No se ha encontrado la película.");
     }
-    document.getElementById("deleteParam").style.display = 'none';
+    document.getElementById("deleteParam").classList.add('d-none');
     deleteIndex.value = "";
 }

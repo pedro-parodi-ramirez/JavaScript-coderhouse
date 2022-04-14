@@ -5,55 +5,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charades</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <nav class="menu">
-            <h1 class="menu__h1">Charades - Dígalo con Mímica</h1>
-            <ul id="menuList">
-                <li class="menu__li">
-                    <a href="index.html">Inicio</a>
-                    <button id="moviesOptions" class="menu__button">Películas</button>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div class="configMovies">
-        <button id="listMovies">Listar películas</button>
-        <button id="addMovie">Agregar película</button>        
-        <button id="deleteMovie">Eliminar película</button>
-        <div class="addMovie">
-            <form id="addMovieInputs" class="addMovie__form">
-                <div>
-                    <label class="addMovie__label">Nombre</label>
-                    <label class="addMovie__label">Género</label>
-                    <label class="addMovie__label">Director</label>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">Acerca de Charades</a>
+                        </li>
+                    </ul>
                 </div>
-                <input type="text" id="movieName" class="addMovie__input">
-                <input list="genderOptions" id="movieGender" class="addMovie__input">
-                    <datalist id="genderOptions">
-                        <option value="Comedia"></option>
-                        <option value="Ciencia ficción"></option>
-                        <option value="Fantasía"></option>
-                        <option value="Película infantil"></option>
-                    </datalist>
-                <input type="text" id="movieDirector" class="addMovie__input">
-                <input type="submit" id="confirmAddMovie" class="addMovie__input--active" value="Agregar">
-            </form>
-        </div>        
-        <div id="deleteParam" class="deleteMovie">
-            <h3 class="deleteMovie__h3">¿Qué película desea eliminar?</h3>
-            <input type="number" id="deleteIndex" class="deleteMovie__input" placeholder="Índice de película">
-            <input type="submit" id="confirmDelete" class="deleteMovie__input--active" value="Borrar">
+            </div>
+          </nav>
+    </header>
+    <br><br>
+    <div class="container">
+        <div id="mainOptions" class="d-grid gap-2 col-6 mx-auto">
+            <button id="configMovies" class="btn btn-primary">Configuración</button>
+            <button id="buttonGetMovie" class="btn btn-primary">Buscar película</button><br>
+            <output id="outputMovieGender" class="d-flex justify-content-center"></output>
+            <output id="outputMovie" class="d-flex justify-content-center"></output>
+        </div>
+        <div id="moviesOptions" class="d-none">
+            <div class="d-grid gap-2 d-flex justify-content-center">
+                <button id="listMovies" type="button" class="btn btn-secondary">Listar películas</button>
+                <button id="addMovie" type="button" class="btn btn-secondary">Agregar película</button>
+                <button id="deleteMovie" type="button" class="btn btn-secondary">Eliminar película</button>
+                <button id="backToMenu" class="btn btn-primary">Volver</button>
+            </div><br>
+            <div id="addMovieInputs" class="d-none">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2 d-flex justify-content-center">
+                        <label>Nombre</label>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center">
+                        <label>Género</label>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center">
+                        <label>Director</label>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2">
+                        <input type="text" id="movieName" class="text-center">
+                    </div>
+                    <div class="col-2">
+                        <input list="genderOptions" id="movieGender" class="text-center">
+                        <datalist id="genderOptions">
+                            <option value="Comedia"></option>
+                            <option value="Ciencia ficción"></option>
+                            <option value="Fantasía"></option>
+                            <option value="Película infantil"></option>
+                        </datalist>   
+                    </div>
+                    <div class="col-2">
+                        <input type="text" id="movieDirector" class="text-center">
+                    </div>
+                </div><br>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2 d-flex justify-content-center">
+                        <input type="submit" id="confirmAddMovie" class="btn btn-outline-success" value="Agregar">
+                    </div>
+                </div>
+            </div>
+            <div id="deleteParam" class="d-grid gap-2 d-flex justify-content-center d-none">
+                <h5>¿Qué película desea eliminar?</h5>
+                <input type="number" id="deleteIndex" class="form-control-sm text-center" placeholder="Índice de película">
+                <input type="submit" id="confirmDelete" class="btn btn-outline-danger" value="Borrar">
+            </div>
+            <div id="movieListDiv"></div>
         </div>
     </div>
-    <div class="getMovie">
-        <h3>Presione el botón para buscar una película aleatoriamente ...</h3>
-        <button id="buttonGetMovie" class="getMovie_button">Buscar</button><br>
-        <output id="outputMovie" class="getMovie__output"></output>
-    </div>
-    <div id="movieListDiv"></div>
     <script src="index.js"></script>
 </body>
 </html>
