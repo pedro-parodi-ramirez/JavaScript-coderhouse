@@ -1,3 +1,7 @@
+# desafíoEntregrable 2
+
+Sin modifaciones.
+
 # desafíoComplementario 3
 
 La entrega anterior (primeraEntrega PF) ya cumplía con la consiga. Lo que se hizo fue incorporar Bootstrap 5 al proyecto para empezar a interactuar con las librerías y que el entorno quede más prolijo.
