@@ -26,12 +26,15 @@
     </header>
     <br><br>
     <div class="container">
+        <!-- Menú principal -->
         <div id="mainOptions" class="d-grid gap-2 col-6 mx-auto">
             <button id="configMovies" class="btn btn-primary">Configuración</button>
             <button id="buttonGetMovie" class="btn btn-primary">Buscar película</button><br>
             <output id="outputMovieGender" class="d-flex justify-content-center"></output>
             <output id="outputMovie" class="d-flex justify-content-center"></output>
         </div>
+
+        <!-- Configuración de películas -->
         <div id="moviesOptions" class="d-none">
             <div class="d-grid gap-2 d-flex justify-content-center">
                 <button id="listMovies" type="button" class="btn btn-secondary">Listar películas</button>
@@ -39,6 +42,7 @@
                 <button id="deleteMovie" type="button" class="btn btn-secondary">Eliminar película</button>
                 <button id="backToMenu" class="btn btn-primary">Volver</button>
             </div><br>
+            <!-- Agregar película -->
             <div id="addMovieInputs" class="d-none">
                 <div class="row d-flex justify-content-center">
                     <div class="col-2 d-flex justify-content-center">
@@ -74,14 +78,19 @@
                     </div>
                 </div>
             </div>
+            <!-- Eliminar película -->
             <div id="deleteParam" class="d-grid gap-2 d-flex justify-content-center d-none">
                 <h5>¿Qué película desea eliminar?</h5>
                 <input type="number" id="deleteIndex" class="form-control-sm text-center" placeholder="Índice de película">
                 <input type="submit" id="confirmDelete" class="btn btn-outline-danger" value="Borrar">
             </div>
+            <!-- Listar películas -->
             <div id="movieListDiv"></div>
         </div>
     </div>
+
+    <script src="classMovie.js"></script>
+    <script src="movieList.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
