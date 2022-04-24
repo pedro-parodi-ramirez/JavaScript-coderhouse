@@ -5,11 +5,14 @@
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
 function getMovie(){
+    // Se capta la lista de películas del local storage
+    let movieListCopy = getMovieListCopy(false);
+    
     // Se genera género de película de forma aleatoria
     const randomGenderIndex = Math.round( Math.random() * (moviesGenders.length-1) );
     const randomGender = moviesGenders[randomGenderIndex];
     // Se selecciona todas las películas de ese género
-    const genderMovies = movieList.filter((m) => m.gender == randomGender);
+    const genderMovies = movieListCopy.filter((m) => m.gender == randomGender);
     // Se selecciona una película de forma aleatoria, del género correspondiente
     const randomMovieIndex = Math.round( Math.random() * (genderMovies.length-1) );
     const randomMovie = genderMovies[randomMovieIndex];
@@ -60,14 +63,17 @@ function confirmAdd(){
     director = director.charAt(0).toUpperCase() + director.slice(1);
     
     document.getElementById("addMovieInputs").classList.add('d-none');
-    movieList.push(new Movie(newMovie, gender, director));
+    movieList.push(new Movie(movieList.length+1, newMovie, gender, director));
+
+    // Se agrega la nueva película al local storage
+    localStorage.setItem("movieList", JSON.stringify(movieList));
+
     alert("Película agregada!");
 
     newMovie = document.getElementById("movieName").value = "";
     gender = document.getElementById("movieGender").value = "";
     director = document.getElementById("movieDirector").value = "";
 
-    sortMovies(movieList);
     listMovies();
 }
 
@@ -83,11 +89,14 @@ function listMovies(){
     const movieListDiv = document.getElementById("movieListDiv");
     movieListDiv.innerHTML = "<br><h4>Lista de películas almancedas:</h4>";
     
+    // Se capta la lista de películas del local storage ordenada alfabéticamente
+    let movieListCopy = getMovieListCopy(true);
+
     const newOL = document.createElement("ol");
     let li;
-    for(const element of movieList){
+    for(const m of movieListCopy){
         li = document.createElement("li");
-        li.innerHTML = element.showInfo();
+        li.innerHTML = m.showInfo();
         newOL.appendChild(li);
     };
     movieListDiv.appendChild(newOL);
@@ -106,10 +115,28 @@ function deleteMovie(){
 document.getElementById("confirmDelete").addEventListener("click", confirmDelete);
 // confirmDelete() consulta al usuario cual película desea eliminar y la elimina. Luego, muestra la lista de películas en pantalla.
 function confirmDelete(){
+    // Se capta la lista de películas del local storage ordenada alfabéticamente
+    let movieListCopy = getMovieListCopy(true);
+
     const deleteIndex = document.getElementById("deleteIndex");
     let index = parseInt(deleteIndex.value);
-    if( (index > 0) && (index <= movieList.length) ){
-        const deleted = movieList.splice(index-1, 1);
+    if( (index > 0) && (index <= movieListCopy.length) ){
+        const movieToDelete = movieListCopy[index-1];
+
+        movieListCopy = movieListCopy.filter( (m) => m.id != movieToDelete.id );
+        
+        // Se reasigna los id según sea necesario
+        movieListCopy = movieListCopy.map( (m) => {
+            m.id > movieToDelete.id && m.id--;
+            return m;
+        });
+
+        console.log(movieListCopy);
+
+        // Se reordena según id y se guardan los cambios en local storage
+        movieListCopy.sort( (a,b) => a.id - b.id );
+        localStorage.setItem("movieList", JSON.stringify(movieListCopy));
+
         alert("Película eliminada!");
         listMovies();
     }
