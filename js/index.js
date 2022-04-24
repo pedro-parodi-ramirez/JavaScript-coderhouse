@@ -68,13 +68,14 @@ function confirmAdd(){
     let newMovie = document.getElementById("movieName").value;
     let gender = document.getElementById("movieGender").value;
     let director = document.getElementById("movieDirector").value;
-    
+    let imgUrl = document.getElementById("imgUrl").value;
+
     // Se setea la primer letra de cada variable a mayúscula
     newMovie = newMovie.charAt(0).toUpperCase() + newMovie.slice(1);
     director = director.charAt(0).toUpperCase() + director.slice(1);
     
     document.getElementById("addMovieInputs").classList.add('d-none');
-    movieList.push(new Movie(movieList.length+1, newMovie, gender, director));
+    movieList.push(new Movie(movieList.length+1, newMovie, gender, director, imgUrl));
 
     // Se agrega la nueva película al local storage
     localStorage.setItem("movieList", JSON.stringify(movieList));
@@ -84,6 +85,7 @@ function confirmAdd(){
     newMovie = document.getElementById("movieName").value = "";
     gender = document.getElementById("movieGender").value = "";
     director = document.getElementById("movieDirector").value = "";
+    imgUrl = document.getElementById("imgUrl").value = "";
 
     listMovies();
 }
