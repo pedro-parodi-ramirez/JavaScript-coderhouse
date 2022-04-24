@@ -23,7 +23,7 @@ function getMovie(){
     movieCard = document.createElement('div');
     movieCard.setAttribute("class", 'col col-sm-6');
     movieCard.innerHTML = `
-        <div class="card h-100">
+        <div class="card border-dark mb-3 bg-light h-100">
             <img src=${randomMovie.img} class="card-img-top" alt="Not available">
             <div class="card-body">
                 <h5 class="card-title">${randomMovie.name}</h5>
@@ -59,8 +59,7 @@ function backToMenu(){
 document.getElementById("addMovie").addEventListener("click", addMovie);
 // addMovie() muestra un formulario para que el usuario luego complete con información de la película a agregar
 function addMovie(){
-    document.getElementById("addMovieInputs").classList.remove('d-none');
-    document.getElementById("deleteParam").classList.add('d-none');
+    document.getElementById("addMovieInputs").classList.remove('d-none');    
 }
 
 document.getElementById("confirmAddMovie").addEventListener("click", confirmAdd);
@@ -97,8 +96,7 @@ document.getElementById("listMovies").addEventListener("click", listMovies);
 function listMovies(){
     movieContainer.classList.remove('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
-    document.getElementById("deleteParam").classList.add('d-none');
-
+    
     movieContainer.innerHTML = "";
 
     // Se capta la lista de películas del local storage ordenada alfabéticamente
@@ -109,58 +107,39 @@ function listMovies(){
         moviesCards = document.createElement('div');
         moviesCards.classList.add('col');
         moviesCards.innerHTML = `
-            <div class="card h-100">
+            <div class="card border-dark mb-3 bg-light h-100">
                 <img src=${m.img} class="card-img-top" alt="Not available">
                 <div class="card-body">
-                    <h5 class="card-title">${m.name}</h5>
+                    <h5>${m.name}</h5>
                     <p class="card-text">Género: ${m.gender}<br>
-                                                    Director: ${m.director}
+                                            Director: ${m.director}
                     </p>
                 </div>
+                <div class="d-flex align-self-center mb-2"><a id="borrar${m.id}" class="btn btn-danger">Borrar</a></div>
             </div>`;
         movieContainer.appendChild(moviesCards);
+
+        document.getElementById(`borrar${m.id}`).addEventListener("click", () => deleteMovie(`${m.id}`));
     });
 }
 
 /************************************************ ELIMINAR PELÍCULA ************************************************/
 
-document.getElementById("deleteMovie").addEventListener("click", deleteMovie);
-// deleteMovie() muestra en pantalla la lista de películas para que luego el usuario pueda decidir cual eliminar
-function deleteMovie(){
-    listMovies();
-    document.getElementById("addMovieInputs").classList.add('d-none');
-    document.getElementById("deleteParam").classList.remove('d-none');
-}
-
-document.getElementById("confirmDelete").addEventListener("click", confirmDelete);
-// confirmDelete() consulta al usuario cual película desea eliminar y la elimina. Luego, muestra la lista de películas en pantalla.
-function confirmDelete(){
-    // Se capta la lista de películas del local storage ordenada alfabéticamente
-    let movieListCopy = getMovieListCopy(true);
-
-    const deleteIndex = document.getElementById("deleteIndex");
-    let index = parseInt(deleteIndex.value);
-    if( (index > 0) && (index <= movieListCopy.length) ){
-        const movieToDelete = movieListCopy[index-1];
-
-        movieListCopy = movieListCopy.filter( (m) => m.id != movieToDelete.id );
+function deleteMovie(movieToDeleteId){
+    let movieListCopy = getMovieListCopy(false);
+    movieListCopy = movieListCopy.filter( (m) => m.id != movieToDeleteId );
         
-        // Se reasigna los id según sea necesario
-        movieListCopy = movieListCopy.map( (m) => {
-            m.id > movieToDelete.id && m.id--;
-            return m;
-        });
+    // Se reasigna los id según sea necesario
+    console.log(movieToDeleteId);
+    movieListCopy = movieListCopy.map( (m) => {
+        m.id > movieToDeleteId && m.id--;
+        return m;
+    });
 
-        // Se reordena según id y se guardan los cambios en local storage
-        movieListCopy.sort( (a,b) => a.id - b.id );
-        localStorage.setItem("movieList", JSON.stringify(movieListCopy));
+    console.log(movieListCopy);
 
-        alert("Película eliminada!");
-        listMovies();
-    }
-    else{
-        alert("No se ha encontrado la película.");
-    }
-    document.getElementById("deleteParam").classList.add('d-none');
-    deleteIndex.value = "";
+    localStorage.setItem("movieList", JSON.stringify(movieListCopy));
+
+    alert("Película eliminada!");
+    listMovies();
 }
