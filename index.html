@@ -43,7 +43,7 @@
                 <button id="backToMenu" class="btn btn-primary">Volver</button>
             </div><br>
             <!-- Agregar película -->
-            <div id="addMovieInputs" class="d-none">
+            <div id="addMovieInputs" class="d-none pb-4">
                 <div class="row d-flex justify-content-center">
                     <div class="col-2 d-flex justify-content-center">
                         <label>Nombre</label>
@@ -79,16 +79,27 @@
                 </div>
             </div>
             <!-- Eliminar película -->
-            <div id="deleteParam" class="d-grid gap-2 d-flex justify-content-center d-none">
+            <div id="deleteParam" class="d-grid gap-2 d-flex justify-content-center d-none pb-4">
                 <h5>¿Qué película desea eliminar?</h5>
                 <input type="number" id="deleteIndex" class="form-control-sm text-center" placeholder="Índice de película">
                 <input type="submit" id="confirmDelete" class="btn btn-outline-danger" value="Borrar">
             </div>
             <!-- Listar películas -->
-            <div id="movieListDiv"></div>
+            <!-- <div id="movieListDiv"></div> -->
+            <div id="movie-container" class="row row-cols-1 row-cols-md-4 g-4">
+                <!-- <div class="col">
+                    <div class="card h-100">
+                        <img src="" class="card-img-top" alt="Not available">
+                        <div class="card-body">
+                        <h5 class="card-title">El señor de los anillos</h5>
+                        <p class="card-text">El señor de los anillos</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
         </div>
     </div>
-
+    
     <script src="./js/classMovie.js"></script>
     <script src="./js/movieList.js"></script>
     <script src="./js/index.js"></script>

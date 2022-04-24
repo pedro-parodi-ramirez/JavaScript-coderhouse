@@ -1,6 +1,7 @@
 /******************************************************************************************************************/
 /*************************************************** MENU JUGAR ***************************************************/
 /******************************************************************************************************************/
+const outputMovie = document.getElementById("outputMovie");
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
@@ -17,11 +18,21 @@ function getMovie(){
     const randomMovieIndex = Math.round( Math.random() * (genderMovies.length-1) );
     const randomMovie = genderMovies[randomMovieIndex];
     
-    const outputMovieGender = document.getElementById("outputMovieGender");
-    outputMovieGender.innerHTML = `<i>Género: ${randomGender}</i>`;
-    
-    const outputMovie = document.getElementById("outputMovie");
-    outputMovie.innerHTML = `<strong>${randomMovie.showInfoReduced(true)}</strong>`;
+    outputMovie.innerHTML = "";
+    let movieCard;    
+    movieCard = document.createElement('div');
+    movieCard.setAttribute("class", 'col col-sm-6');
+    movieCard.innerHTML = `
+        <div class="card h-100">
+            <img src=${randomMovie.img} class="card-img-top" alt="Not available">
+            <div class="card-body">
+                <h5 class="card-title">${randomMovie.name}</h5>
+                <p class="card-text">Género: ${randomMovie.gender}<br>
+                                                Director: ${randomMovie.director}
+                </p>
+            </div>
+        </div>`;
+    outputMovie.appendChild(movieCard);
 }
 
 /******************************************************************************************************************/
@@ -31,6 +42,7 @@ function getMovie(){
 document.getElementById("configMovies").addEventListener("click", showMoviesOptions);
 // showMoviesOptions() muestra las opciones disponibles para la lista de películas
 function showMoviesOptions(){
+    outputMovie.innerHTML = "";
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.remove('d-none');
 }
@@ -78,28 +90,36 @@ function confirmAdd(){
 }
 
 /************************************************ LISTAR PELÍCULAS ************************************************/
+const movieContainer = document.querySelector("#movie-container");
 
 document.getElementById("listMovies").addEventListener("click", listMovies);
 // listMovies() lista las películas en pantalla usando una lista ordenada
 function listMovies(){
-    document.getElementById("movieListDiv").classList.remove('d-none');
+    movieContainer.classList.remove('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("deleteParam").classList.add('d-none');
 
-    const movieListDiv = document.getElementById("movieListDiv");
-    movieListDiv.innerHTML = "<br><h4>Lista de películas almancedas:</h4>";
-    
+    movieContainer.innerHTML = "";
+
     // Se capta la lista de películas del local storage ordenada alfabéticamente
     let movieListCopy = getMovieListCopy(true);
 
-    const newOL = document.createElement("ol");
-    let li;
-    for(const m of movieListCopy){
-        li = document.createElement("li");
-        li.innerHTML = m.showInfo();
-        newOL.appendChild(li);
-    };
-    movieListDiv.appendChild(newOL);
+    let moviesCards;
+    movieListCopy.forEach( (m) => {
+        moviesCards = document.createElement('div');
+        moviesCards.classList.add('col');
+        moviesCards.innerHTML = `
+            <div class="card h-100">
+                <img src=${m.img} class="card-img-top" alt="Not available">
+                <div class="card-body">
+                    <h5 class="card-title">${m.name}</h5>
+                    <p class="card-text">Género: ${m.gender}<br>
+                                                    Director: ${m.director}
+                    </p>
+                </div>
+            </div>`;
+        movieContainer.appendChild(moviesCards);
+    });
 }
 
 /************************************************ ELIMINAR PELÍCULA ************************************************/
@@ -130,8 +150,6 @@ function confirmDelete(){
             m.id > movieToDelete.id && m.id--;
             return m;
         });
-
-        console.log(movieListCopy);
 
         // Se reordena según id y se guardan los cambios en local storage
         movieListCopy.sort( (a,b) => a.id - b.id );
