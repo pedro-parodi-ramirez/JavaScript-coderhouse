@@ -32,7 +32,7 @@ function getMovie(){
                 </p>
             </div>
         </div>`;
-    outputMovie.appendChild(movieCard);
+    outputMovie.appendChild(movieCard);    
 }
 
 /******************************************************************************************************************/
@@ -70,27 +70,33 @@ function confirmAdd(e){
     // Se frena el envío del formulario
     e.preventDefault();
 
-    let newMovie = document.getElementById("movieName").value;
-    let gender = document.getElementById("movieGender").value;
-    let director = document.getElementById("movieDirector").value;
-    let imgUrl = document.getElementById("imgUrl").value;
+    let movieName = document.getElementById("movieName").value;
 
-    // Se setea la primer letra de cada variable a mayúscula y el resto a mínuscula
-    newMovie= newMovie.toLowerCase();
-    director = director.toLowerCase();
-    newMovie = newMovie.charAt(0).toUpperCase() + newMovie.slice(1);
-    director = director.charAt(0).toUpperCase() + director.slice(1);
-    
-    document.getElementById("addMovieInputs").classList.add('d-none');
-    movieList.push(new Movie(movieList.length+1, newMovie, gender, director, imgUrl));
+    if(movieName ?? false){
+        let gender = document.getElementById("movieGender").value;
+        let director = document.getElementById("movieDirector").value;
+        let imgUrl = document.getElementById("imgUrl").value;
 
-    // Se agrega la nueva película al local storage
-    localStorage.setItem("movieList", JSON.stringify(movieList));
+        // Se setea la primer letra de cada variable a mayúscula y el resto a mínuscula
+        movieName= movieName.toLowerCase();
+        director = director.toLowerCase();
+        movieName = movieName.charAt(0).toUpperCase() + movieName.slice(1);
+        director = director.charAt(0).toUpperCase() + director.slice(1);
+        
+        document.getElementById("addMovieInputs").classList.add('d-none');
+        movieList.push(new Movie(movieList.length+1, movieName, gender, director, imgUrl));
 
-    // Se reinicia el formulario
-    document.querySelector("#addMovieInputs").reset();
+        // Se agrega la nueva película al local storage
+        localStorage.setItem("movieList", JSON.stringify(movieList));
 
-    listMovies();
+        // Se reinicia el formulario
+        document.querySelector("#addMovieInputs").reset();
+
+        listMovies();
+    }
+    else{
+        modal.toggle();
+    }
 }
 
 /************************************************ LISTAR PELÍCULAS ************************************************/
@@ -120,7 +126,7 @@ function listMovies(){
                                             Director: ${m.director}
                     </p>
                 </div>
-                <div class="d-flex align-self-center mb-2"><a id="borrar${m.id}" class="btn btn-danger">Borrar</a></div>
+                <div class="d-flex align-self-center mb-2"><a id="borrar${m.id}" class="btn btn-danger">Borrar <ion-icon name="trash-outline" size="small"></ion-icon></a></div>
             </div>`;
         movieContainer.appendChild(moviesCards);
 
