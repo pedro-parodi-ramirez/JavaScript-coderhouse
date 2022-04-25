@@ -51,7 +51,9 @@ document.getElementById("backToMenu").addEventListener("click", backToMenu);
 // backToMenu() vuelve al menu principal, similar al hacer click en 'Inicio'
 function backToMenu(){
     document.getElementById("moviesOptions").classList.add('d-none');
-    document.getElementById("mainOptions").classList.remove('d-none');    
+    document.getElementById("addMovieInputs").classList.add('d-none');
+    document.getElementById("mainOptions").classList.remove('d-none');
+    movieContainer.innerHTML = "";
 }
 
 /************************************************ AGREGAR PELÍCULA ************************************************/
@@ -64,13 +66,18 @@ function addMovie(){
 
 document.getElementById("confirmAddMovie").addEventListener("click", confirmAdd);
 // confirmAdd() toma la información ingresada por el usuario y agrega la película a la lista de películas
-function confirmAdd(){
+function confirmAdd(e){
+    // Se frena el envío del formulario
+    e.preventDefault();
+
     let newMovie = document.getElementById("movieName").value;
     let gender = document.getElementById("movieGender").value;
     let director = document.getElementById("movieDirector").value;
     let imgUrl = document.getElementById("imgUrl").value;
 
-    // Se setea la primer letra de cada variable a mayúscula
+    // Se setea la primer letra de cada variable a mayúscula y el resto a mínuscula
+    newMovie= newMovie.toLowerCase();
+    director = director.toLowerCase();
     newMovie = newMovie.charAt(0).toUpperCase() + newMovie.slice(1);
     director = director.charAt(0).toUpperCase() + director.slice(1);
     
@@ -80,12 +87,8 @@ function confirmAdd(){
     // Se agrega la nueva película al local storage
     localStorage.setItem("movieList", JSON.stringify(movieList));
 
-    alert("Película agregada!");
-
-    newMovie = document.getElementById("movieName").value = "";
-    gender = document.getElementById("movieGender").value = "";
-    director = document.getElementById("movieDirector").value = "";
-    imgUrl = document.getElementById("imgUrl").value = "";
+    // Se reinicia el formulario
+    document.querySelector("#addMovieInputs").reset();
 
     listMovies();
 }
@@ -132,16 +135,12 @@ function deleteMovie(movieToDeleteId){
     movieListCopy = movieListCopy.filter( (m) => m.id != movieToDeleteId );
         
     // Se reasigna los id según sea necesario
-    console.log(movieToDeleteId);
     movieListCopy = movieListCopy.map( (m) => {
         m.id > movieToDeleteId && m.id--;
         return m;
     });
 
-    console.log(movieListCopy);
-
     localStorage.setItem("movieList", JSON.stringify(movieListCopy));
 
-    alert("Película eliminada!");
     listMovies();
 }
