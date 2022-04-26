@@ -1,3 +1,8 @@
+# segundaEntrega Proyecto Final
+
+La aplicación ya interactuaba con el DOM y detectaba eventos. Para esta entrega se incorpora la utilización de JSON y Storage, aplicado a la lista de películas 'movieList'. La lista se guarda en localStorage y cada vez que el programa la necesita, la capta y trabaja con una copia. Se crea una función 'serializer' que transforma el arreglo 'movieList' captado de local storage en un arreglo de objetos de clase 'Movie'. Esto para recuperar las propiedades y métodos de la clase 'Movie'.
+También se trabajó sobre la app para darle mejor estilos y mejorar el código de forma genérica. Se incorpora un Modal para dar mensaje de error al usuario si intenta agregar una película con nombre vacío.
+
 # desafíoEntregrable 2
 
 Sin modifaciones.
