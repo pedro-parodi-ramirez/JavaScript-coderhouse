@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary p-2 text-dark bg-opacity-10">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -47,13 +47,13 @@
                 <button id="backToMenu" class="btn btn-primary">Volver</button>
             </div><br>
             <!-- Agregar película -->
-            <form id="addMovieInputs" class="d-none">
+            <form id="addMovieInputs" class="d-none rounded border border-dark mb-4 pt-4 px-4 bg-success text-dark bg-opacity-10">
                 <div class="mb-3">
-                    <label for="movieName" class="form-label">Nombre de la película</label>
+                    <label for="movieName" class="form-label"><strong>Nombre de la película</strong></label>
                     <input type="text" id="movieName" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="movieGender" class="form-label">Género</label>
+                    <label for="movieGender" class="form-label"><strong>Género</strong></label>
                     <select id="movieGender" class="form-control">
                         <option value="Comedia">Comedia</option>
                         <option value="Ciencia ficción">Ciencia ficción</option>
@@ -62,11 +62,11 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="movieDirector" class="form-label">Director</label>
+                    <label for="movieDirector" class="form-label"><strong></stron>Director</strong></label>
                     <input type="text" class="form-control" id="movieDirector" />
                 </div>
                 <div class="mb-3">
-                    <label for="imgUrl" class="form-label">Img url</label>
+                    <label for="imgUrl" class="form-label"><strong>Img url</strong></label>
                     <input type="text" class="form-control" id="imgUrl" />
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
@@ -75,7 +75,7 @@
             </form>
 
             <!-- Listar películas -->
-            <div id="movie-container" class="row row-cols-1 row-cols-md-4 g-4">
+            <div id="movie-container" class="row row-cols-1 row-cols-md-4 g-4 d-none">
                 <!-- <div class="col">
                     <div class="card h-100">
                         <img src="" class="card-img-top" alt="Not available">

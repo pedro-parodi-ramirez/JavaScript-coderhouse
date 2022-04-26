@@ -1,4 +1,4 @@
-const modal = new bootstrap.Modal(document.getElementById('modalError'));
+const modalError = new bootstrap.Modal(document.getElementById('modalError'));
 
 /* <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

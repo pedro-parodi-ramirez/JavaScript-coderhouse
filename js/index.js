@@ -61,7 +61,8 @@ function backToMenu(){
 document.getElementById("addMovie").addEventListener("click", addMovie);
 // addMovie() muestra un formulario para que el usuario luego complete con información de la película a agregar
 function addMovie(){
-    document.getElementById("addMovieInputs").classList.remove('d-none');    
+    document.getElementById("addMovieInputs").classList.toggle('d-none');
+    movieContainer.classList.add('d-none');
 }
 
 document.getElementById("confirmAddMovie").addEventListener("click", confirmAdd);
@@ -95,7 +96,7 @@ function confirmAdd(e){
         listMovies();
     }
     else{
-        modal.toggle();
+        modalError.toggle();
     }
 }
 
@@ -105,9 +106,14 @@ const movieContainer = document.querySelector("#movie-container");
 document.getElementById("listMovies").addEventListener("click", listMovies);
 // listMovies() lista las películas en pantalla usando una lista ordenada
 function listMovies(){
-    movieContainer.classList.remove('d-none');
+    movieContainer.classList.toggle('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     
+    showMovieContainers();
+}
+
+// showMovieContainers() muestra las card images
+function showMovieContainers(){
     movieContainer.innerHTML = "";
 
     // Se capta la lista de películas del local storage ordenada alfabéticamente
@@ -148,5 +154,5 @@ function deleteMovie(movieToDeleteId){
 
     localStorage.setItem("movieList", JSON.stringify(movieListCopy));
 
-    listMovies();
+    showMovieContainers();
 }
