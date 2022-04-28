@@ -1,3 +1,7 @@
+# desafíoComplentario 4 | desafíoEntregable 3
+Se incorporan al proyecto el operador NULLISH COALESCING y el operador lógico AND en el archivo 'movieList.js'.
+También se incoporan alertas con la librería SweetAlert2 para mostrar un mensaje de error cuando el ususario intenta agregar una película vacía o cuando la misma ya existe en la base de datos.
+
 # segundaEntrega Proyecto Final
 
 La aplicación ya interactuaba con el DOM y detectaba eventos. Para esta entrega se incorpora la utilización de JSON y Storage, aplicado a la lista de películas 'movieList'. La lista se guarda en localStorage y cada vez que el programa la necesita, la capta y trabaja con una copia. Se crea una función 'serializer' que transforma el arreglo 'movieList' captado de local storage en un arreglo de objetos de clase 'Movie'. Esto para recuperar las propiedades y métodos de la clase 'Movie'.
