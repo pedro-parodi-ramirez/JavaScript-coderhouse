@@ -1,25 +1,26 @@
 /******************************************************************************************************************/
 /*************************************************** MENU JUGAR ***************************************************/
 /******************************************************************************************************************/
+
 const outputMovie = document.getElementById("outputMovie");
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
-function getMovie(){
+function getMovie() {
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
-    
+
     // Se genera género de película de forma aleatoria
-    const randomGenderIndex = Math.round( Math.random() * (moviesGenders.length-1) );
+    const randomGenderIndex = Math.round(Math.random() * (moviesGenders.length - 1));
     const randomGender = moviesGenders[randomGenderIndex];
     // Se selecciona todas las películas de ese género
     const genderMovies = movieListCopy.filter((m) => m.gender == randomGender);
     // Se selecciona una película de forma aleatoria, del género correspondiente
-    const randomMovieIndex = Math.round( Math.random() * (genderMovies.length-1) );
+    const randomMovieIndex = Math.round(Math.random() * (genderMovies.length - 1));
     const randomMovie = genderMovies[randomMovieIndex];
-    
+
     outputMovie.innerHTML = "";
-    let movieCard;    
+    let movieCard;
     movieCard = document.createElement('div');
     movieCard.setAttribute("class", 'col col-sm-6');
     movieCard.innerHTML = `
@@ -32,7 +33,7 @@ function getMovie(){
                 </p>
             </div>
         </div>`;
-    outputMovie.appendChild(movieCard);    
+    outputMovie.appendChild(movieCard);
 }
 
 /******************************************************************************************************************/
@@ -41,7 +42,7 @@ function getMovie(){
 
 document.getElementById("configMovies").addEventListener("click", showMoviesOptions);
 // showMoviesOptions() muestra las opciones disponibles para la lista de películas
-function showMoviesOptions(){
+function showMoviesOptions() {
     outputMovie.innerHTML = "";
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.remove('d-none');
@@ -49,7 +50,7 @@ function showMoviesOptions(){
 
 document.getElementById("backToMenu").addEventListener("click", backToMenu);
 // backToMenu() vuelve al menu principal, similar al hacer click en 'Inicio'
-function backToMenu(){
+function backToMenu() {
     document.getElementById("moviesOptions").classList.add('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
@@ -60,67 +61,80 @@ function backToMenu(){
 
 document.getElementById("addMovie").addEventListener("click", addMovie);
 // addMovie() muestra un formulario para que el usuario luego complete con información de la película a agregar
-function addMovie(){
+function addMovie() {
     document.getElementById("addMovieInputs").classList.toggle('d-none');
     movieContainer.classList.add('d-none');
 }
 
 document.getElementById("confirmAddMovie").addEventListener("click", confirmAdd);
 // confirmAdd() toma la información ingresada por el usuario y agrega la película a la lista de películas
-function confirmAdd(e){
+function confirmAdd(e) {
     // Se frena el envío del formulario
     e.preventDefault();
 
+    // Se capta nombre y se normaliza el formato
     let movieName = document.getElementById("movieName").value;
+    movieName = movieName.toLowerCase();
+    movieName = movieName.charAt(0).toUpperCase() + movieName.slice(1);
 
-    if(movieName ?? false){
+    let error = checkMovieName(movieName);
+
+    if (error == movieNameError.noError) {
         let gender = document.getElementById("movieGender").value;
         let director = document.getElementById("movieDirector").value;
         let imgUrl = document.getElementById("imgUrl").value;
 
-        // Se setea la primer letra de cada variable a mayúscula y el resto a mínuscula
-        movieName= movieName.toLowerCase();
-        director = director.toLowerCase();
-        movieName = movieName.charAt(0).toUpperCase() + movieName.slice(1);
-        director = director.charAt(0).toUpperCase() + director.slice(1);
-        
-        document.getElementById("addMovieInputs").classList.add('d-none');
-        movieList.push(new Movie(movieList.length+1, movieName, gender, director, imgUrl));
+        pushMovie(movieName, gender, director, imgUrl);
 
-        // Se agrega la nueva película al local storage
-        localStorage.setItem("movieList", JSON.stringify(movieList));
+        document.getElementById("addMovieInputs").classList.add('d-none');
+        listMovies();
 
         // Se reinicia el formulario
         document.querySelector("#addMovieInputs").reset();
 
-        listMovies();
+        // Se muestra alert de éxito al usuario
+        popSweetAlert("", "Película agregada!", "success", "Close");
+    } else {
+        popError(error);
     }
-    else{
-        modalError.toggle();
+}
+
+// Muestra un Sweet Alert según el error
+function popError(error) {
+    switch (error) {
+        case movieNameError.blankName:
+            popSweetAlert("Error!", "La película debe contener un nombre", "error", "Close");
+            break;
+        case movieNameError.repeatedName:
+            popSweetAlert("Error!", "Esa película ya existe.", "error", "Close");
+            break;
+        default:
+            break;
     }
 }
 
 /************************************************ LISTAR PELÍCULAS ************************************************/
+
 const movieContainer = document.querySelector("#movie-container");
 
 document.getElementById("listMovies").addEventListener("click", listMovies);
 // listMovies() lista las películas en pantalla usando una lista ordenada
-function listMovies(){
+function listMovies() {
     movieContainer.classList.toggle('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
-    
+
     showMovieContainers();
 }
 
 // showMovieContainers() muestra las card images
-function showMovieContainers(){
+function showMovieContainers() {
     movieContainer.innerHTML = "";
 
     // Se capta la lista de películas del local storage ordenada alfabéticamente
     let movieListCopy = getMovieListCopy(true);
 
     let moviesCards;
-    movieListCopy.forEach( (m) => {
+    movieListCopy.forEach((m) => {
         moviesCards = document.createElement('div');
         moviesCards.classList.add('col');
         moviesCards.innerHTML = `
@@ -142,12 +156,12 @@ function showMovieContainers(){
 
 /************************************************ ELIMINAR PELÍCULA ************************************************/
 
-function deleteMovie(movieToDeleteId){
+function deleteMovie(movieToDeleteId) {
     let movieListCopy = getMovieListCopy(false);
-    movieListCopy = movieListCopy.filter( (m) => m.id != movieToDeleteId );
-        
+    movieListCopy = movieListCopy.filter((m) => m.id != movieToDeleteId);
+
     // Se reasigna los id según sea necesario
-    movieListCopy = movieListCopy.map( (m) => {
+    movieListCopy = movieListCopy.map((m) => {
         m.id > movieToDeleteId && m.id--;
         return m;
     });

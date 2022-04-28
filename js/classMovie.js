@@ -1,5 +1,5 @@
-class Movie{
-    constructor(id, name, gender, director, img){
+class Movie {
+    constructor(id, name, gender, director, img) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -7,17 +7,17 @@ class Movie{
         this.img = img;
     }
 
-    showInfo(){
-        return (this.name 
-                    + " - Gender: " + this.gender
-                    + " - Director: " + this.director);
+    showInfo() {
+        return (this.name
+            + " - Gender: " + this.gender
+            + " - Director: " + this.director);
     }
 
-    showInfoReduced(fullyReduced){
-        if(fullyReduced){
+    showInfoReduced(fullyReduced) {
+        if (fullyReduced) {
             return (this.name);
         }
-        else{
+        else {
             return (this.name + " - Director: " + this.director);
         }
     }
