@@ -1,8 +1,9 @@
+const outputMovie = document.getElementById("outputMovie");
+const movieContainer = document.querySelector("#movie-container");
+
 /******************************************************************************************************************/
 /*************************************************** MENU JUGAR ***************************************************/
 /******************************************************************************************************************/
-
-const outputMovie = document.getElementById("outputMovie");
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
@@ -35,6 +36,11 @@ function getMovie() {
         </div>`;
     outputMovie.appendChild(movieCard);
 }
+
+document.getElementById('timer').value = 120;
+setInterval(() => {
+    document.getElementById('timer').value--;
+}, 1000)
 
 /******************************************************************************************************************/
 /*********************************************** MENU PELICULAS ***************************************************/
@@ -114,8 +120,6 @@ function popError(error) {
 }
 
 /************************************************ LISTAR PELÍCULAS ************************************************/
-
-const movieContainer = document.querySelector("#movie-container");
 
 document.getElementById("listMovies").addEventListener("click", listMovies);
 // listMovies() lista las películas en pantalla usando una lista ordenada
