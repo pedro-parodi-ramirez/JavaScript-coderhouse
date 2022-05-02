@@ -1,13 +1,33 @@
 const outputMovie = document.getElementById("outputMovie");
 const movieContainer = document.querySelector("#movie-container");
+const TIMER_VALUE = 5;
 
 /******************************************************************************************************************/
 /*************************************************** MENU JUGAR ***************************************************/
 /******************************************************************************************************************/
 
+document.getElementById('initPlay').addEventListener('click', () => {
+    document.getElementById('panelPlay').classList.remove('d-none');
+    document.getElementById('initPlay').classList.add('disabled');
+});
+
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
 function getMovie() {
+    // Se inicializa el timer que marca el tiempo para el jugador
+    document.getElementById('timer').value = TIMER_VALUE;
+    const timer = setInterval(() => {
+        document.getElementById('timer').value--;
+        if (document.getElementById('timer').value == 0) {
+            clearInterval(timer);
+            // ! DEFINIR FIN DE TURNO
+        }
+    }, 1000);
+
+    // Se inhabilita el botón de buscar película hasta que finalice el timer
+    document.getElementById("buttonGetMovie").classList.add('disabled');
+
+
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
 
@@ -36,11 +56,6 @@ function getMovie() {
         </div>`;
     outputMovie.appendChild(movieCard);
 }
-
-document.getElementById('timer').value = 120;
-setInterval(() => {
-    document.getElementById('timer').value--;
-}, 1000)
 
 /******************************************************************************************************************/
 /*********************************************** MENU PELICULAS ***************************************************/
