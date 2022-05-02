@@ -2,6 +2,13 @@ const outputMovie = document.getElementById("outputMovie");
 const movieContainer = document.querySelector("#movie-container");
 const TIMER_VALUE = 5;
 
+let teamPlaying = 1;
+
+const team = [
+    { id: 1, score: 0 },
+    { id: 2, score: 0 }
+]
+
 /******************************************************************************************************************/
 /*************************************************** MENU JUGAR ***************************************************/
 /******************************************************************************************************************/
@@ -9,6 +16,10 @@ const TIMER_VALUE = 5;
 document.getElementById('initPlay').addEventListener('click', () => {
     document.getElementById('panelPlay').classList.remove('d-none');
     document.getElementById('initPlay').classList.add('disabled');
+    popSweetAlert("", `Turno del equipo ${teamPlaying}!`, "info", "Ok");
+
+    // Se inicializan los colores de los equipos
+    toggleColors()
 });
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
@@ -20,7 +31,15 @@ function getMovie() {
         document.getElementById('timer').value--;
         if (document.getElementById('timer').value == 0) {
             clearInterval(timer);
-            // ! DEFINIR FIN DE TURNO
+            Swal.fire({
+                text: '¿La película fue adivinada?',
+                icon: 'question',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes!',
+                showDenyButton: true,
+                denyButtonColor: '#d33',
+                denyButtonText: 'No'
+            }).then((result) => endTurn(result.isConfirmed))
         }
     }, 1000);
 
@@ -55,6 +74,36 @@ function getMovie() {
             </div>
         </div>`;
     outputMovie.appendChild(movieCard);
+}
+
+// endTurn() suma punto al equipo correspondiente en caso de adivinanza y avanza el turno al equipo siguiente
+function endTurn(movieGuessed) {
+    if (movieGuessed) {
+        let scoreTeam = team.find((t) => t.id == teamPlaying);
+        scoreTeam.score++;
+    }
+    (teamPlaying == 1) ? (teamPlaying = 2) : (teamPlaying = 1);
+
+    // Se alternan los colores de los equipos
+    toggleColors();
+
+    // Se muestra alerta del equipo que sigue
+    popSweetAlert("", `Turno del equipo ${teamPlaying}!`, "info", "Ok");
+
+    // Se vuelve a habilitar el botón de buscar película
+    document.getElementById("buttonGetMovie").classList.remove('disabled');
+}
+
+
+// toggleColors() alterna entre rojo y verde el box con la información de cada equipo para denotar de quien es el turno
+function toggleColors() {
+    if (teamPlaying == 1) {
+        document.getElementById('team1').className = "col col-3 h-100 border border-success bg-success p-2 text-dark bg-opacity-10";
+        document.getElementById('team2').className = "col col-3 h-100 border border-danger bg-danger p-2 text-dark bg-opacity-10";
+    } else {
+        document.getElementById('team1').className = "col col-3 h-100 border border-danger bg-danger p-2 text-dark bg-opacity-10";
+        document.getElementById('team2').className = "col col-3 h-100 border border-success bg-success p-2 text-dark bg-opacity-10";
+    }
 }
 
 /******************************************************************************************************************/
