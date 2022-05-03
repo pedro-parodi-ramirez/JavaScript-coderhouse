@@ -4,6 +4,7 @@ function popSweetAlert(_title, _text, _icon, _confirmButtonText){
         text: _text,
         icon: _icon,
         confirmButtonText: _confirmButtonText,
-        confirmButtonColor: '#0d6efd'
+        confirmButtonColor: '#0d6efd',
+        allowOutsideClick: false
     })
 }

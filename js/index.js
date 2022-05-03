@@ -9,13 +9,18 @@ const team = [
     { id: 2, score: 0 }
 ]
 
+document.getElementById('team1Score').value = 0;
+document.getElementById('team2Score').value = 0;
+document.getElementById('timer').value = 0;
+
 /******************************************************************************************************************/
 /*************************************************** MENU JUGAR ***************************************************/
 /******************************************************************************************************************/
 
 document.getElementById('initPlay').addEventListener('click', () => {
     document.getElementById('panelPlay').classList.remove('d-none');
-    document.getElementById('initPlay').classList.add('disabled');
+    document.getElementById('configMovies').remove();
+    document.getElementById('initPlay').remove();
     popSweetAlert("", `Turno del equipo ${teamPlaying}!`, "info", "Ok");
 
     // Se inicializan los colores de los equipos
@@ -32,21 +37,22 @@ function getMovie() {
         if (document.getElementById('timer').value == 0) {
             clearInterval(timer);
             Swal.fire({
+                title: "Timeout!",
                 text: '¿La película fue adivinada?',
-                icon: 'question',
+                icon: 'warning',
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes!',
+                confirmButtonText: 'Si!',
                 showDenyButton: true,
                 denyButtonColor: '#d33',
-                denyButtonText: 'No'
+                denyButtonText: 'No',
+                allowOutsideClick: false
             }).then((result) => endTurn(result.isConfirmed))
         }
     }, 1000);
 
     // Se inhabilita el botón de buscar película hasta que finalice el timer
-    document.getElementById("buttonGetMovie").classList.add('disabled');
-
-
+    document.getElementById("buttonGetMovie").className = "btn btn-danger w-50 disabled";
+    
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
 
@@ -81,6 +87,7 @@ function endTurn(movieGuessed) {
     if (movieGuessed) {
         let scoreTeam = team.find((t) => t.id == teamPlaying);
         scoreTeam.score++;
+        document.getElementById(`team${teamPlaying}Score`).value++;
     }
     (teamPlaying == 1) ? (teamPlaying = 2) : (teamPlaying = 1);
 
@@ -91,7 +98,9 @@ function endTurn(movieGuessed) {
     popSweetAlert("", `Turno del equipo ${teamPlaying}!`, "info", "Ok");
 
     // Se vuelve a habilitar el botón de buscar película
-    document.getElementById("buttonGetMovie").classList.remove('disabled');
+    document.getElementById("buttonGetMovie").className = "btn btn-success w-50";
+
+    outputMovie.innerHTML = "";
 }
 
 
@@ -99,9 +108,9 @@ function endTurn(movieGuessed) {
 function toggleColors() {
     if (teamPlaying == 1) {
         document.getElementById('team1').className = "col col-3 h-100 border border-success bg-success p-2 text-dark bg-opacity-10";
-        document.getElementById('team2').className = "col col-3 h-100 border border-danger bg-danger p-2 text-dark bg-opacity-10";
+        document.getElementById('team2').className = "col col-3 h-100 border border-warning bg-warning p-2 text-dark bg-opacity-10";
     } else {
-        document.getElementById('team1').className = "col col-3 h-100 border border-danger bg-danger p-2 text-dark bg-opacity-10";
+        document.getElementById('team1').className = "col col-3 h-100 border border-warning bg-warning p-2 text-dark bg-opacity-10";
         document.getElementById('team2').className = "col col-3 h-100 border border-success bg-success p-2 text-dark bg-opacity-10";
     }
 }
@@ -114,6 +123,7 @@ document.getElementById("configMovies").addEventListener("click", showMoviesOpti
 // showMoviesOptions() muestra las opciones disponibles para la lista de películas
 function showMoviesOptions() {
     outputMovie.innerHTML = "";
+    document.getElementById('panelPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.remove('d-none');
 }
