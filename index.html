@@ -11,72 +11,77 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
+
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary p-2 text-dark bg-opacity-10">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">Acerca de Charades</a>
-                        </li>
-                    </ul>
+    <div id="main-container" class="background-image">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-2 text-white bg-opacity-75">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active h6" aria-current="page" href="index.html">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link h6" href="about.html">Como jugar</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </nav>
+        </header>
+
+        <div class="container pt-5">
+            <!-- Menú principal -->
+            <div id="mainOptions" class="d-grid gap-2 col-6 mx-auto">
+                <span class="d-flex justify-content-center"><a id="configMovies" class="btn btn-warning w-50 btn-lg" aria-disabled="true">Configuración</a></span>
+                <span class="d-flex justify-content-center mt-2"><a id="initPlay" class="btn btn-warning w-50 btn-lg" aria-disabled="true">Empezar a jugar</a></span>
             </div>
-        </nav>
-    </header>
-    <br><br>
-    <div class="container">
-        <!-- Menú principal -->
-        <div id="mainOptions" class="d-grid gap-2 col-6 mx-auto">
-            <a id="configMovies" class="btn btn-primary" aria-disabled="true">Configuración</a>
-            <a id="initPlay" class="btn btn-primary" aria-disabled="true">Empezar</a>
-        </div>
 
-        <!-- Configuración de películas -->
-        <div id="moviesOptions" class="d-none">
-            <div class="d-grid gap-2 d-flex justify-content-center">
-                <button id="listMovies" type="button" class="btn btn-secondary">Listar películas</button>
-                <button id="addMovie" type="button" class="btn btn-secondary">Agregar película</button>
-                <button id="backToMenu" class="btn btn-primary">Volver</button>
-            </div><br>
-            <!-- Agregar película -->
-            <form id="addMovieInputs"
-                class="d-none rounded border border-dark mb-4 pt-4 px-4 bg-success text-dark bg-opacity-10">
-                <div class="mb-3">
-                    <label for="movieName" class="form-label"><strong>Nombre de la película</strong></label>
-                    <input type="text" id="movieName" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label for="movieGender" class="form-label"><strong>Género</strong></label>
-                    <select id="movieGender" class="form-control">
-                        <option value="Comedia">Comedia</option>
-                        <option value="Ciencia ficción">Ciencia ficción</option>
-                        <option value="Fantasía">Fantasía</option>
-                        <option value="Película infantil">Película infantil</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="movieDirector" class="form-label"><strong></stron>Director</strong></label>
-                    <input type="text" class="form-control" id="movieDirector" />
-                </div>
-                <div class="mb-3">
-                    <label for="imgUrl" class="form-label"><strong>Img url</strong></label>
-                    <input type="text" class="form-control" id="imgUrl" />
-                </div>
-                <div class="mb-3 d-flex justify-content-center">
-                    <button type="submit" id="confirmAddMovie" class="btn btn-success">Agregar</button>
-                </div>
-            </form>
+            <!-- Configuración de películas -->
+            <div id="moviesOptions" class="d-none">
+                <div class="d-grid gap-2 d-flex justify-content-center">
+                    <button id="listMovies" type="button" class="btn btn-warning">Listar películas</button>
+                    <button id="addMovie" type="button" class="btn btn-warning">Agregar película</button>
+                    <button id="backToMenu" class="btn btn-secondary">Volver</button>
+                </div><br>
+                <!-- Agregar película -->
+                <form id="addMovieInputs"
+                    class="d-none rounded border border-dark mb-4 pt-4 px-4 bg-secondary text-dark bg-opacity-10">
+                    <div class="mb-3">
+                        <label for="movieName" class="form-label"><strong>Nombre de la película</strong></label>
+                        <input type="text" id="movieName" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="movieGender" class="form-label"><strong>Género</strong></label>
+                        <select id="movieGender" class="form-control">
+                            <option value="Comedia">Comedia</option>
+                            <option value="Ciencia ficción">Ciencia ficción</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Fantasía">Fantasía</option>
+                            <option value="Película infantil">Película infantil</option>
+                            <option value="Suspenso">Suspenso</option>
+                            <option value="Terror">Terror</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="movieDirector" class="form-label"><strong></stron>Director</strong></label>
+                        <input type="text" class="form-control" id="movieDirector" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="imgUrl" class="form-label"><strong>Img url</strong></label>
+                        <input type="text" class="form-control" id="imgUrl" />
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <button type="submit" id="confirmAddMovie" class="btn btn-success">Agregar</button>
+                    </div>
+                </form>
 
-            <!-- Listar películas -->
-            <div id="movie-container" class="row row-cols-1 row-cols-md-4 g-4 d-none">
-                <!-- <div class="col">
+                <!-- Listar películas -->
+                <div id="movie-container" class="row row-cols-1 row-cols-md-4 g-4 d-none">
+                    <!-- <div class="col">
                     <div class="card h-100">
                         <img src="" class="card-img-top" alt="Not available">
                         <div class="card-body">
@@ -85,54 +90,55 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
-        </div>
-
-        <div id="panelPlay" class="row mt-5 d-none">
-            <div id="team1" class="col col-3 h-100">
-                <h3 class="d-flex justify-content-center my-3">EQUIPO 1</h3>
-                <h5 class="d-flex justify-content-center my-4">PUNTOS</h5>
-                <output id="team1Score" class="fs-1 d-flex justify-content-center mt-4 py-5"></output>
-            </div>
-            <div class="col col-6">
-                <div class="row align-items-center ps-4 mb-3">
-                    <div class="row d-flex justify-content-center">
-                        <a id="buttonGetMovie" class="btn btn-success w-50" aria-disabled="true">Buscar película</a>
-                    </div>
-                    <div class= "fs-3 row d-flex justify-content-center mt-4">
-                        <div class="col col-2 d-flex justify-content-center">
-                            <strong><i>Tiempo</i></strong>
-                        </div>
-                        <div class="col col-2 d-flex justify-content-center">
-                            <output id="timer"></output>
-                        </div>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <output id="outputMovie" class="d-flex justify-content-center"></output>
                 </div>
             </div>
-            <div id="team2" class="col col-3 h-100">
-                <h3 class="d-flex justify-content-center my-3">EQUIPO 2</h3>
-                <h5 class="d-flex justify-content-center my-4">PUNTOS</h5>
-                <output id="team2Score" class="fs-1 d-flex justify-content-center mt-4 py-5"></output>
+
+            <div id="panelPlay" class="row mt-5 d-none">
+                <div id="team1" class="col col-3 h-100 border rounded-3 border-2 border-primary bg-primary p-2 text-white bg-opacity-50">
+                    <h3 class="d-flex justify-content-center my-3">EQUIPO AZUL</h3>
+                    <h5 class="d-flex justify-content-center my-4">PUNTOS</h5>
+                    <output id="teamAzulScore" class="fs-1 d-flex justify-content-center mt-4 py-5"></output>
+                </div>
+                <div class="col col-6">
+                    <div class="row align-items-center ps-4 mb-3">
+                        <div class="row d-flex justify-content-center">
+                            <a id="buttonGetMovie" class="btn btn-warning w-50 btn-lg" aria-disabled="true">Buscar película</a>
+                        </div>
+                        <div class="fs-3 row d-flex justify-content-center mt-4 ps-5 text-white">
+                            <div class="col col-2 d-flex justify-content-center">
+                                <strong><i>Tiempo</i></strong>
+                            </div>
+                            <div class="col col-2 d-flex justify-content-center">
+                                <output id="timer"></output>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <output id="outputMovie" class="d-flex justify-content-center"></output>
+                    </div>
+                </div>
+                <div id="team2" class="col col-3 h-100 border rounded-3 border-2 border-danger bg-danger p-2 text-white bg-opacity-50">
+                    <h3 class="d-flex justify-content-center my-3">EQUIPO ROJO</h3>
+                    <h5 class="d-flex justify-content-center my-4">PUNTOS</h5>
+                    <output id="teamRojoScore" class="fs-1 d-flex justify-content-center mt-4 py-5"></output>
+                </div>
             </div>
+
         </div>
 
+        <!-- scripts Bootstrap, SeetAlert2, Ionic -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <!-- Propios -->
+        <script src="./js/sweetAlert.js"></script>
+        <script src="./js/classMovie.js"></script>
+        <script src="./js/movieList.js"></script>
+        <script src="./js/index.js"></script>
     </div>
-
-    <!-- scripts Bootstrap, SeetAlert2, Ionic -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <!-- Propios -->
-    <script src="./js/sweetAlert.js"></script>
-    <script src="./js/classMovie.js"></script>
-    <script src="./js/movieList.js"></script>
-    <script src="./js/index.js"></script>
 </body>
 
 </html>

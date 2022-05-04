@@ -2,15 +2,15 @@ const outputMovie = document.getElementById("outputMovie");
 const movieContainer = document.querySelector("#movie-container");
 const TIMER_VALUE = 5;
 
-let teamPlaying = 1;
+let teamPlaying = "Azul";
 
 const team = [
-    { id: 1, score: 0 },
-    { id: 2, score: 0 }
+    { id: 1, color: "Azul", score: 0 },
+    { id: 2, color: "Rojo", score: 0 }
 ]
 
-document.getElementById('team1Score').value = 0;
-document.getElementById('team2Score').value = 0;
+document.getElementById('teamAzulScore').value = 0;
+document.getElementById('teamRojoScore').value = 0;
 document.getElementById('timer').value = 0;
 
 /******************************************************************************************************************/
@@ -21,38 +21,15 @@ document.getElementById('initPlay').addEventListener('click', () => {
     document.getElementById('panelPlay').classList.remove('d-none');
     document.getElementById('configMovies').remove();
     document.getElementById('initPlay').remove();
-    popSweetAlert("", `Turno del equipo ${teamPlaying}!`, "info", "Ok");
-
-    // Se inicializan los colores de los equipos
-    toggleColors()
+    popSweetAlert("", `Turno del equipo ${teamPlaying.toLocaleUpperCase()}!`, "info", "Ok");
 });
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
 function getMovie() {
-    // Se inicializa el timer que marca el tiempo para el jugador
-    document.getElementById('timer').value = TIMER_VALUE;
-    const timer = setInterval(() => {
-        document.getElementById('timer').value--;
-        if (document.getElementById('timer').value == 0) {
-            clearInterval(timer);
-            Swal.fire({
-                title: "Timeout!",
-                text: '¿La película fue adivinada?',
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Si!',
-                showDenyButton: true,
-                denyButtonColor: '#d33',
-                denyButtonText: 'No',
-                allowOutsideClick: false
-            }).then((result) => endTurn(result.isConfirmed))
-        }
-    }, 1000);
+    // Se inhabilita el botón de buscar película hasta próximo turno
+    document.getElementById("buttonGetMovie").classList.add('disabled');
 
-    // Se inhabilita el botón de buscar película hasta que finalice el timer
-    document.getElementById("buttonGetMovie").className = "btn btn-danger w-50 disabled";
-    
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
 
@@ -65,12 +42,13 @@ function getMovie() {
     const randomMovieIndex = Math.round(Math.random() * (genderMovies.length - 1));
     const randomMovie = genderMovies[randomMovieIndex];
 
+    // Se muestra la película en pantalla
     outputMovie.innerHTML = "";
     let movieCard;
     movieCard = document.createElement('div');
     movieCard.setAttribute("class", 'col col-sm-6');
     movieCard.innerHTML = `
-        <div class="card border-dark mb-3 bg-light h-100">
+        <div class="card border-warning border-2 mb-3 bg-light h-100 border-warning">
             <img src=${randomMovie.img} class="card-img-top" alt="Not available">
             <div class="card-body">
                 <h5 class="card-title">${randomMovie.name}</h5>
@@ -80,39 +58,46 @@ function getMovie() {
             </div>
         </div>`;
     outputMovie.appendChild(movieCard);
+
+    // Se inicializa el timer que marca el tiempo para el jugador en turno
+    document.getElementById('timer').value = TIMER_VALUE;
+    const timer = setInterval(() => {
+        document.getElementById('timer').value--;
+        if (document.getElementById('timer').value == 0) {
+            clearInterval(timer);
+            Swal.fire({
+                title: "Timeout!",
+                text: '¿La película fue adivinada?',
+                icon: 'warning',
+                confirmButtonColor: '#198754',
+                confirmButtonText: 'Si!',
+                showDenyButton: true,
+                denyButtonColor: '#adb5bd',
+                denyButtonText: 'No',
+                allowOutsideClick: false
+            }).then((result) => endTurn(result.isConfirmed, randomMovie.id))
+        }
+    }, 1000);
 }
 
-// endTurn() suma punto al equipo correspondiente en caso de adivinanza y avanza el turno al equipo siguiente
-function endTurn(movieGuessed) {
+// endTurn() suma punto al equipo si corresponde y avanza el turno
+function endTurn(movieGuessed, outputMovieId) {
     if (movieGuessed) {
-        let scoreTeam = team.find((t) => t.id == teamPlaying);
+        let scoreTeam = team.find((t) => t.color === teamPlaying);
         scoreTeam.score++;
         document.getElementById(`team${teamPlaying}Score`).value++;
     }
-    (teamPlaying == 1) ? (teamPlaying = 2) : (teamPlaying = 1);
-
-    // Se alternan los colores de los equipos
-    toggleColors();
+    (teamPlaying === "Rojo") ? (teamPlaying = "Azul") : (teamPlaying = "Rojo");
 
     // Se muestra alerta del equipo que sigue
-    popSweetAlert("", `Turno del equipo ${teamPlaying}!`, "info", "Ok");
+    popSweetAlert("", `Turno del equipo ${teamPlaying.toLocaleUpperCase()}!`, "info", "Ok");
 
     // Se vuelve a habilitar el botón de buscar película
-    document.getElementById("buttonGetMovie").className = "btn btn-success w-50";
+    document.getElementById("buttonGetMovie").classList.remove('disabled');
 
+    // Se elimina la película para que no pueda ser seleccionada nuevamente
+    deleteMovie(outputMovieId);
     outputMovie.innerHTML = "";
-}
-
-
-// toggleColors() alterna entre rojo y verde el box con la información de cada equipo para denotar de quien es el turno
-function toggleColors() {
-    if (teamPlaying == 1) {
-        document.getElementById('team1').className = "col col-3 h-100 border border-success bg-success p-2 text-dark bg-opacity-10";
-        document.getElementById('team2').className = "col col-3 h-100 border border-warning bg-warning p-2 text-dark bg-opacity-10";
-    } else {
-        document.getElementById('team1').className = "col col-3 h-100 border border-warning bg-warning p-2 text-dark bg-opacity-10";
-        document.getElementById('team2').className = "col col-3 h-100 border border-success bg-success p-2 text-dark bg-opacity-10";
-    }
 }
 
 /******************************************************************************************************************/
@@ -126,6 +111,7 @@ function showMoviesOptions() {
     document.getElementById('panelPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.remove('d-none');
+    document.getElementById("main-container").classList.remove('background-image');
 }
 
 document.getElementById("backToMenu").addEventListener("click", backToMenu);
@@ -134,6 +120,7 @@ function backToMenu() {
     document.getElementById("moviesOptions").classList.add('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
+    document.getElementById("main-container").classList.add('background-image');
     movieContainer.innerHTML = "";
 }
 
@@ -224,7 +211,7 @@ function showMovieContainers() {
                                             Director: ${m.director}
                     </p>
                 </div>
-                <div class="d-flex align-self-center mb-2"><a id="borrar${m.id}" class="btn btn-danger">Borrar <ion-icon name="trash-outline" size="small"></ion-icon></a></div>
+                <div class="d-flex align-self-center mb-2"><a id="borrar${m.id}" class="btn btn-warning">Borrar <ion-icon name="trash-outline" size="small"></ion-icon></a></div>
             </div>`;
         movieContainer.appendChild(moviesCards);
 
