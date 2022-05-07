@@ -1,14 +1,13 @@
 /* ! IMPLEMENTADO CON BOOTSTRAP */
 
-#imagenAboutCharades {
-    margin-top: 30px;
-    width: 500px;
-}
-
 .background-image {
     background-image: url("../img/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     /* width: 500px; */
     height: 100vh;
+}
+
+#btnHowToPlay:hover {
+    cursor:pointer;
 }

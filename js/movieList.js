@@ -23,7 +23,7 @@ movieList.forEach((m) => {
 
 /* const fetchData = async () => {
     // Fetch películas de fantasía
-    const resp = await fetch('https://imdb-api.com/API/AdvancedSearch/k_8fxkd9r4?title_type=tv_movie&count=250');
+    const resp = await fetch('https://imdb-api.com/API/AdvancedSearch/k_8fxkd9r4?title_type=tv_movie&languages=es&count=250');
     const data = await resp.json();
 
     let id = 0, imgLowQualityUlr, gender;
@@ -99,9 +99,9 @@ function sortMovies(movieArray) {
 }
 
 // Convierte arreglo captado de local storage a su clase original
-function serializer(arrayMovie, movieList) {
+function serializer(arrayMovie, movieListCopy) {
     arrayMovie.forEach(e => {
-        movieList.push(new Movie(e.id,
+        movieListCopy.push(new Movie(e.id,
             e.name,
             e.genderList,
             e.starList,
@@ -126,11 +126,12 @@ function getMovieListCopy(sorted) {
 
 // Agrega una película a la lista de películas
 function pushMovie(movieName, gender, starList, imgUrl) {
+    let movieListCopy = getMovieListCopy(false);
 
-    movieList.push(new Movie(movieList.length + 1, movieName, gender, starList, imgUrl));
+    movieListCopy.push(new Movie(movieListCopy.length, movieName, gender, starList, imgUrl));
 
     // Se agrega la nueva película al local storage
-    localStorage.setItem("movieList", JSON.stringify(movieList));
+    localStorage.setItem("movieList", JSON.stringify(movieListCopy));
 }
 
 /* Corrobora si el nombre ingresado por el usuario es válido.

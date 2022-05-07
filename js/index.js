@@ -123,6 +123,7 @@ function backToMenu() {
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
     document.getElementById("main-container").classList.add('background-image');
+    document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
 }
@@ -158,10 +159,16 @@ function confirmAdd(e) {
 
     if (error == movieNameError.noError) {
         let gender = [document.getElementById("movieGender").value];
-        let starList = [];
+        let starList = [document.getElementById("movieStarList").value];
         let imgUrl = document.getElementById("imgUrl").value;
 
-        pushMovie(movieName, gender, starList, imgUrl); // starList no implementado - el reparto se agrega vacío
+        // En caso de que el usuario no agregue url de imagen, se agrega una para clarificar
+        (imgUrl == null || imgUrl == undefined || imgUrl == "") && (imgUrl = './img/image_not_available.jpg');
+
+        // En caso de que el usuario no agregue el reparto, se agrega uno vacío en formato array
+        (movieStarList == null || movieStarList == undefined || movieStarList == "") && (movieStarList = []);
+
+        pushMovie(movieName, gender, starList, imgUrl);
 
         document.getElementById("addMovieInputs").classList.add('d-none');
         listMovies();
@@ -208,7 +215,7 @@ function showMovieContainers() {
     // Se capta la lista de películas del local storage ordenada alfabéticamente
     let movieListCopy = getMovieListCopy(true);
 
-    let moviesCards;
+    let moviesCards = "";
     movieListCopy.forEach((m) => {
         moviesCards = document.createElement('div');
         moviesCards.classList.add('col');
@@ -244,3 +251,19 @@ function deleteMovie(movieToDeleteId) {
 
     showMovieContainers();
 }
+
+/******************************************************************************************************************/
+/************************************************* COMO JUGAR *****************************************************/
+/******************************************************************************************************************/
+
+document.getElementById("btnHowToPlay").addEventListener("click", () => {
+    document.getElementById("textHowToPlay").classList.remove('d-none');
+    document.getElementById("mainOptions").classList.add('d-none');
+    document.getElementById("moviesOptions").classList.add('d-none');
+    document.getElementById("addMovieInputs").classList.add('d-none');
+    document.getElementById("main-container").classList.add('background-image');
+    document.getElementById("panelPlay").classList.add('d-none');
+    document.querySelector("#addMovieInputs").reset();
+    movieContainer.classList.add('d-none');
+    movieContainer.innerHTML = "";
+})
