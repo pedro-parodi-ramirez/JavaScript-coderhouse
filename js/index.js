@@ -1,6 +1,6 @@
 const outputMovie = document.getElementById("outputMovie");
 const movieContainer = document.querySelector("#movie-container");
-const TIMER_VALUE = 1;
+let TIMER_VALUE = 120;
 
 let teamPlaying = "Azul";
 
@@ -32,14 +32,14 @@ function getMovie() {
 
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
-    
+
     // Se genera género de película de forma aleatoria
     const randomGenderIndex = Math.round(Math.random() * (moviesGenders.length - 1));
     const randomGender = moviesGenders[randomGenderIndex];
-    
+
     // Se selecciona todas las películas de ese género
     const genderMovies = movieListCopy.filter((m) => m.genderList.includes(randomGender));
-    
+
     // Se selecciona una película de forma aleatoria, del género correspondiente
     const randomMovieIndex = Math.round(Math.random() * (genderMovies.length - 1));
     const randomMovie = genderMovies[randomMovieIndex];
@@ -50,7 +50,7 @@ function getMovie() {
     movieCard = document.createElement('div');
     movieCard.setAttribute("class", 'col col-sm-6');
     movieCard.innerHTML = `
-        <div class="card border-warning border-2 mb-3 bg-light h-100 border-warning">
+        <div class="card border-warning border-2 mb-3 bg-light bg-opacity-75 h-100">
             <img src=${randomMovie.img} class="card-img-top" alt="Not available">
             <div class="card-body">
                 <h4 class="card-title">${randomMovie.name}</h4>
@@ -112,20 +112,44 @@ function showMoviesOptions() {
     outputMovie.innerHTML = "";
     document.getElementById('panelPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.add('d-none');
-    document.getElementById("moviesOptions").classList.remove('d-none');
-    document.getElementById("main-container").classList.remove('background-image');
+    document.getElementById("moviesOptions").classList.remove('d-none');    
 }
 
 document.getElementById("backToMenu").addEventListener("click", backToMenu);
 // backToMenu() vuelve al menu principal, similar al hacer click en 'Inicio'
 function backToMenu() {
     document.getElementById("moviesOptions").classList.add('d-none');
+    document.getElementById("turnTimeInput").classList.add('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
-    document.getElementById("main-container").classList.add('background-image');
+    document.getElementById('main-container').classList.add('vh-100');
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
+}
+
+/************************************************ TIEMPO DE TURNO ************************************************/
+
+document.getElementById('btnTurnTime').addEventListener("click", () => {
+    document.getElementById("turnTimeInput").classList.toggle('d-none');
+    movieContainer.classList.add('d-none');
+    document.getElementById('main-container').classList.add('vh-100');
+
+    document.getElementById('turnTimeValue').value = "";
+});
+
+document.getElementById('confirmTurnTime').addEventListener("click", changeTurnTime );
+
+function changeTurnTime(){
+    newTurnTime = parseInt(document.getElementById('turnTimeValue').value);
+
+    if( newTurnTime > 0 ){
+        TIMER_VALUE = newTurnTime;
+        popSweetAlert("", "Listo.", "success", "Ok");
+        document.getElementById("turnTimeInput").classList.add('d-none');
+    }else{
+        popSweetAlert("Error!", "El número debe ser entero y mayor a cero.", "error", "Cerrar");
+    }
 }
 
 /************************************************ AGREGAR PELÍCULA ************************************************/
@@ -134,12 +158,14 @@ document.getElementById("addMovie").addEventListener("click", addMovie);
 // addMovie() muestra un formulario para que el usuario luego complete con información de la película a agregar
 function addMovie() {
     document.getElementById("addMovieInputs").classList.toggle('d-none');
+    document.getElementById("turnTimeInput").classList.add('d-none');
     movieContainer.classList.add('d-none');
-    
+    document.getElementById('main-container').classList.add('vh-100');
+
     // Se generan las opciones de géneros disponibles
     let genderList = document.getElementById("movieGender");
     genderList.innerHTML = "";
-    moviesGenders.forEach( (g) => {
+    moviesGenders.forEach((g) => {
         genderList.innerHTML += `<option value=${g}>${g}</option>`;
     })
 }
@@ -170,14 +196,13 @@ function confirmAdd(e) {
 
         pushMovie(movieName, gender, starList, imgUrl);
 
-        document.getElementById("addMovieInputs").classList.add('d-none');
-        listMovies();
+        document.getElementById("addMovieInputs").classList.add('d-none');        
 
         // Se reinicia el formulario
         document.querySelector("#addMovieInputs").reset();
 
         // Se muestra alert de éxito al usuario
-        popSweetAlert("", "Película agregada!", "success", "Close");
+        popSweetAlert("", "Película agregada!", "success", "Cerrar");
     } else {
         popError(error);
     }
@@ -187,10 +212,10 @@ function confirmAdd(e) {
 function popError(error) {
     switch (error) {
         case movieNameError.blankName:
-            popSweetAlert("Error!", "La película debe contener un nombre", "error", "Close");
+            popSweetAlert("Error!", "La película debe contener un nombre", "error", "Cerrar");
             break;
         case movieNameError.repeatedName:
-            popSweetAlert("Error!", "Esa película ya existe.", "error", "Close");
+            popSweetAlert("Error!", "Esa película ya existe.", "error", "Cerrar");
             break;
         default:
             break;
@@ -204,6 +229,8 @@ document.getElementById("listMovies").addEventListener("click", listMovies);
 function listMovies() {
     movieContainer.classList.toggle('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
+    document.getElementById("turnTimeInput").classList.add('d-none');
+    document.getElementById('main-container').classList.toggle('vh-100');
 
     showMovieContainers();
 }
@@ -220,7 +247,7 @@ function showMovieContainers() {
         moviesCards = document.createElement('div');
         moviesCards.classList.add('col');
         moviesCards.innerHTML = `
-            <div class="card border-dark mb-3 bg-light h-100">
+            <div class="card border-warning mb-3 bg-light bg-opacity-75 h-100">
                 <img src=${m.img} class="card-img-top" alt="Not available">
                 <div class="card-body">
                     <h4>${m.name}</h4>
@@ -260,9 +287,10 @@ document.getElementById("btnHowToPlay").addEventListener("click", () => {
     document.getElementById("textHowToPlay").classList.remove('d-none');
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.add('d-none');
-    document.getElementById("addMovieInputs").classList.add('d-none');
-    document.getElementById("main-container").classList.add('background-image');
+    document.getElementById("turnTimeInput").classList.add('d-none');
+    document.getElementById("addMovieInputs").classList.add('d-none');    
     document.getElementById("panelPlay").classList.add('d-none');
+    document.getElementById("main-container").classList.add('vh-100');
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";

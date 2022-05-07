@@ -1,4 +1,4 @@
-function popSweetAlert(_title, _text, _icon, _confirmButtonText){
+function popSweetAlert(_title, _text, _icon, _confirmButtonText) {
     Swal.fire({
         title: _title,
         text: _text,

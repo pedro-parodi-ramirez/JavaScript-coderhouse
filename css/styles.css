@@ -1,13 +1,16 @@
 /* ! IMPLEMENTADO CON BOOTSTRAP */
 
-.background-image {
+body {
     background-image: url("../img/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    /* width: 500px; */
-    height: 100vh;
+    background-attachment: fixed;
 }
 
 #btnHowToPlay:hover {
-    cursor:pointer;
+    cursor: pointer;
+}
+
+.socialMediaLogos{
+    height: 40px;
 }
