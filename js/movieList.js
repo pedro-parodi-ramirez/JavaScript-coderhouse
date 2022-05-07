@@ -8,8 +8,9 @@
 const moviesGenders = [];   // Géneros de películas */
 
 // ! Se inicializan variables segun local storage dado que se agoto por el dia las solicitudes de fetch a IMBd
+localStorage.setItem("movieList", JSON.stringify([{ id: 0, name: "title", genderList: [], starList: [], img: "img" }, { id: 1, name: "title", genderList: [], starList: [], img: "img" }]));
 let movieList = getMovieListCopy(false);
-const moviesGenders = [];
+const moviesGenders = ["Fantasy", "Comedy"];
 
 movieList.forEach((m) => {
     if (m.genderList != null) {

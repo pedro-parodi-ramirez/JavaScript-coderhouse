@@ -51,16 +51,19 @@
             <!-- Configuración de películas -->
             <div id="moviesOptions" class="d-none">
                 <div class="d-grid gap-2 mb-5 d-flex justify-content-center">
-                    <button id="btnTurnTime" type="button" class="btn btn-warning">Tiempo de turno</button>
+                    <button id="btnTimeLimit" type="button" class="btn btn-warning">Tiempo de turno</button>
                     <button id="listMovies" type="button" class="btn btn-warning">Listar películas</button>
                     <button id="addMovie" type="button" class="btn btn-warning">Agregar película</button>
                     <button id="backToMenu" class="btn btn-secondary">Volver</button>
                 </div>
                 <!-- Tiempo de turno -->
-                <div id="turnTimeInput" class="col-3 border border-warning mb-4 mx-auto p-4 bg-warning text-white bg-opacity-25 d-none">
-                    <label for="turnTime" class="form-label fs-5 d-flex justify-content-center"><strong>Tiempo de turno</strong></label>
-                    <input type="number" id="turnTimeValue" class="form-control text-center"/><br>
-                    <button id="confirmTurnTime" type="button" class="btn btn-warning d-flex justify-content-center mx-auto w-50">Set</button>
+                <div id="timeLimitInput"
+                    class="col-3 border border-warning mb-4 mx-auto p-4 bg-warning text-white bg-opacity-25 d-none">
+                    <label for="timeLimitValue" class="form-label fs-5 d-flex justify-content-center"><strong>Tiempo de
+                            turno</strong></label>
+                    <input type="number" id="timeLimitValue" class="form-control text-center" /><br>
+                    <button id="confirmTimeLimit" type="button"
+                        class="btn btn-warning d-flex justify-content-center mx-auto w-50">Set</button>
                 </div>
 
                 <!-- Listar películas -->
@@ -111,9 +114,7 @@
                             <div class="col col-2 d-flex justify-content-center">
                                 <strong><i>Tiempo</i></strong>
                             </div>
-                            <div class="col col-2 d-flex justify-content-center">
-                                <output id="timer"></output>
-                            </div>
+                            <div id="timerCountdown" class="d-flex justify-content-center"></div>
                         </div>
                     </div>
                     <div class="row align-items-center">
@@ -155,19 +156,6 @@
             </div>
 
         </div>
-
-        <!-- scripts Bootstrap, SeetAlert2, Ionic -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        <!-- Propios -->
-        <script src="./js/sweetAlert.js"></script>
-        <script src="./js/classMovie.js"></script>
-        <script src="./js/movieList.js"></script>
-        <script src="./js/index.js"></script>
     </div>
 
     <!-- Footer -->
@@ -192,6 +180,20 @@
             </div>
         </div>
     </footer>
+
+    <!-- scripts Bootstrap, SeetAlert2, Ionic -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Propios -->
+    <script src="./js/sweetAlert.js"></script>
+    <script src="./js/timerCountdown.js"></script>
+    <script src="./js/classMovie.js"></script>
+    <script src="./js/movieList.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
