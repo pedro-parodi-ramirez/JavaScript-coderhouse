@@ -2,42 +2,17 @@
 /*************************************************** VARIABLES ****************************************************/
 /******************************************************************************************************************/
 
-// key IMDd : k_8fxkd9r4
+// key IMDb   : k_8fxkd9r4
+// key IMDb 2 : k_aaaaaaaa
 
-/* const movieList = [];       // Lista de películas
-const moviesGenders = [];   // Géneros de películas */
+const movieList = [];       // Lista de películas
+const moviesGenders = [];   // Géneros de películas
 
-// ! Se inicializan variables segun local storage dado que se agoto por el dia las solicitudes de fetch a IMBd
-localStorage.setItem("movieList", JSON.stringify([{ id: 0, name: "title", genderList: [], starList: [], img: "img" }, { id: 1, name: "title", genderList: [], starList: [], img: "img" }]));
-let movieList = getMovieListCopy(false);
-const moviesGenders = ["Fantasy", "Comedy"];
+const IMG_QLTY = '192x264'; // [192x264, 384x528, ..., original]
 
-movieList.forEach((m) => {
-    if (m.genderList != null) {
-        for (gender of m.genderList) {
-            if ((moviesGenders.some((g) => g == gender) == false)) {
-                moviesGenders.push(gender);
-            }
-        }
-    }
-})
-
-new Promise((resolved) => {
-    setTimeout(() => {
-        document.getElementById('configMovies').classList.remove('disabled');
-        document.getElementById('initPlay').classList.remove('disabled');
-        resolved();
-    }, 100);
-})
-    .then(() => {
-        document.getElementById('spinner').remove();
-    })
-
-// ! Fin inicio variables debido a local storage
-
-/* const fetchData = async () => {
-    // Fetch películas de fantasía
-    const resp = await fetch('https://imdb-api.com/API/AdvancedSearch/k_8fxkd9r4?title_type=tv_movie&languages=es&count=250');
+// Se solicitan un total de 250 películas a la API de IMBDb y se almacenan en movieList
+const fetchData = async () => {
+    const resp = await fetch('https://imdb-api.com/API/AdvancedSearch/k_aaaaaaaa?title_type=tv_movie&languages=es&count=250');
     const data = await resp.json();
 
     let id = 0, imgLowQualityUlr, gender;
@@ -45,18 +20,18 @@ new Promise((resolved) => {
     for (m of data.results) {
         genderList = [];
         // Se rebaja la calidad de la imagen a linkear en cada película
-        imgLowQualityUlr = m.image.replace('original', '384x528');
-        
+        imgLowQualityUlr = m.image.replace('original', IMG_QLTY);
+
         if (m.genreList != null) {
-            for(gender of m.genreList){
+            for (gender of m.genreList) {
                 genderList.push(gender.value);
-                if ( (moviesGenders.some((g) => g == gender.value ) == false ) ){
+                if ((moviesGenders.some((g) => g == gender.value) == false)) {
                     moviesGenders.push(gender.value);
                 }
             }
         }
 
-        (m.starList != null) && (starListForMovie = m.starList.map( (s) => s.name ));
+        (m.starList != null) && (starListForMovie = m.starList.map((s) => s.name));
 
         movieList.push(new Movie(id++, m.title, genderList, starListForMovie, imgLowQualityUlr));
     }
@@ -68,11 +43,10 @@ new Promise((resolved) => {
     document.getElementById('configMovies').classList.remove('disabled');
     document.getElementById('initPlay').classList.remove('disabled');
     document.getElementById('spinner').remove();
-    
 }
 
-// Se captan datos de API IMBd
-fetchData(); */
+// Se captan datos de API IMDb
+fetchData();
 
 // Enumeración para validar nombre al intentar agregar una nueva película
 const movieNameError = {
@@ -138,7 +112,7 @@ function pushMovie(movieName, gender, starList, imgUrl) {
 */
 function checkMovieName(movieName) {
     let error = movieNameError.noError;
-    if (!(movieName ?? false)) {
+    if ((movieName == false) || (movieName == undefined) || (movieName == "")) {
         error = movieNameError.blankName;
     } else {
         movieListCopy = getMovieListCopy(false);

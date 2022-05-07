@@ -18,25 +18,20 @@ document.getElementById('teamRojoScore').value = 0;
 document.getElementById('initPlay').addEventListener('click', () => {
     document.getElementById('panelPlay').classList.remove('d-none');
     document.getElementById('configMovies').remove();
-    document.getElementById('initPlay').remove();    
+    document.getElementById('initPlay').remove();
     popSweetAlert("", `Turno del equipo ${teamPlaying.toLocaleUpperCase()}!`, "info", "Ok");
 });
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
 function getMovie() {
+    document.getElementById('main-container').classList.remove('vh-100');
+
     // Se inhabilita el botón de buscar película hasta próximo turno
     document.getElementById("buttonGetMovie").classList.add('disabled');
 
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
-
-    /* // Se genera género de película de forma aleatoria
-    const randomGenderIndex = Math.round(Math.random() * (moviesGenders.length - 1));
-    const randomGender = moviesGenders[randomGenderIndex];
-
-    // Se selecciona todas las películas de ese género
-    const genderMovies = movieListCopy.filter((m) => m.genderList.includes(randomGender)); */
 
     // Se selecciona una película de forma aleatoria, del género correspondiente
     const randomMovieIndex = Math.round(Math.random() * (movieListCopy.length - 1));
@@ -58,28 +53,26 @@ function getMovie() {
             </div>
         </div>`;
     outputMovie.appendChild(movieCard);
-
-    /* // Se inicializa el timer que marca el tiempo para el jugador en turno
-    document.getElementById('timer').value = TIME_LIMIT;
-    const timer = setInterval(() => {
-        document.getElementById('timer').value--;
-        if (document.getElementById('timer').value == 0) {
-            clearInterval(timer);
-            Swal.fire({
-                title: "Timeout!",
-                text: '¿La película fue adivinada?',
-                icon: 'warning',
-                confirmButtonColor: '#198754',
-                confirmButtonText: 'Si!',
-                showDenyButton: true,
-                denyButtonColor: '#adb5bd',
-                denyButtonText: 'No',
-                allowOutsideClick: false
-            }).then((result) => endTurn(result.isConfirmed, randomMovie.id))
-        }
-    }, 1000); */
-
-    startTimer();
+    
+    // Se inicia el temporizador
+    startTimer()
+        .then((resolved) => {
+            if (resolved) {
+                Swal.fire({
+                    title: "Timeout!",
+                    text: '¿La película fue adivinada?',
+                    icon: 'warning',
+                    confirmButtonColor: '#198754',
+                    confirmButtonText: 'Si!',
+                    showDenyButton: true,
+                    denyButtonColor: '#adb5bd',
+                    denyButtonText: 'No',
+                    allowOutsideClick: false
+                })
+                // La promesa resuelta marca el fin de turno
+                .then((result) => endTurn(result.isConfirmed, randomMovie.id))
+            }
+        });
 }
 
 // endTurn() suma punto al equipo si corresponde y avanza el turno
@@ -100,6 +93,11 @@ function endTurn(movieGuessed, outputMovieId) {
     // Se elimina la película para que no pueda ser seleccionada nuevamente
     deleteMovie(outputMovieId);
     outputMovie.innerHTML = "";
+
+    // Se muestra timer en su valor inicial
+    document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
+
+    document.getElementById('main-container').classList.add('vh-100');
 }
 
 /******************************************************************************************************************/
@@ -112,7 +110,7 @@ function showMoviesOptions() {
     outputMovie.innerHTML = "";
     document.getElementById('panelPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.add('d-none');
-    document.getElementById("moviesOptions").classList.remove('d-none');    
+    document.getElementById("moviesOptions").classList.remove('d-none');
 }
 
 document.getElementById("backToMenu").addEventListener("click", backToMenu);
@@ -132,23 +130,24 @@ function backToMenu() {
 
 document.getElementById('btnTimeLimit').addEventListener("click", () => {
     document.getElementById("timeLimitInput").classList.toggle('d-none');
+    document.getElementById("addMovieInputs").classList.add('d-none');
     movieContainer.classList.add('d-none');
     document.getElementById('main-container').classList.add('vh-100');
 
     document.getElementById('timeLimitValue').value = "";
 });
 
-document.getElementById('confirmTimeLimit').addEventListener("click", changeTimeLimit );
+document.getElementById('confirmTimeLimit').addEventListener("click", changeTimeLimit);
 
-function changeTimeLimit(){
+function changeTimeLimit() {
     let newTimeLimit = parseInt(document.getElementById('timeLimitValue').value);
 
-    if( newTimeLimit > 0 ){
+    if (newTimeLimit > 0) {
         TIME_LIMIT = newTimeLimit;
         document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
         popSweetAlert("", "Listo.", "success", "Ok");
         document.getElementById("timeLimitInput").classList.add('d-none');
-    }else{
+    } else {
         popSweetAlert("Error!", "El número debe ser entero y mayor a cero.", "error", "Cerrar");
     }
 }
@@ -197,7 +196,7 @@ function confirmAdd(e) {
 
         pushMovie(movieName, gender, starList, imgUrl);
 
-        document.getElementById("addMovieInputs").classList.add('d-none');        
+        document.getElementById("addMovieInputs").classList.add('d-none');
 
         // Se reinicia el formulario
         document.querySelector("#addMovieInputs").reset();
@@ -289,10 +288,25 @@ document.getElementById("btnHowToPlay").addEventListener("click", () => {
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.add('d-none');
     document.getElementById("timeLimitInput").classList.add('d-none');
-    document.getElementById("addMovieInputs").classList.add('d-none');    
+    document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("panelPlay").classList.add('d-none');
     document.getElementById("main-container").classList.add('vh-100');
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
 })
+
+/******************************************************************************************************************/
+/************************************************** METODOS *******************************************************/
+/******************************************************************************************************************/
+
+function popSweetAlert(_title, _text, _icon, _confirmButtonText) {
+    Swal.fire({
+        title: _title,
+        text: _text,
+        icon: _icon,
+        confirmButtonText: _confirmButtonText,
+        confirmButtonColor: '#198754',
+        allowOutsideClick: false
+    })
+}

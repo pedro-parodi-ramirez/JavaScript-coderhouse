@@ -1,5 +1,5 @@
 // Start with an initial value of 20 seconds
-let TIME_LIMIT = 120;
+let TIME_LIMIT = 5;
 
 const FULL_DASH_ARRAY = 283
 
@@ -25,30 +25,24 @@ function formatTime(timeLeft) {
     return `${minutes}:${seconds}`;
 }
 
-function startTimer() {
-    document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
-    timerInterval = setInterval(() => {
-        timePassed++;
-        timeLeft = TIME_LIMIT - timePassed;
-        document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+const startTimer = () => {
+    timePassed = 0;
+    document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", FULL_DASH_ARRAY);
+    return new Promise((resolved) => {
+        document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
+        timerInterval = setInterval(() => {
+            timePassed++;
+            timeLeft = TIME_LIMIT - timePassed;
+            document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
 
-        setCircleDasharray();
+            setCircleDasharray();
 
-        if (timeLeft == 0) {
-            clearInterval(timerInterval);
-            Swal.fire({
-                title: "Timeout!",
-                text: '¿La película fue adivinada?',
-                icon: 'warning',
-                confirmButtonColor: '#198754',
-                confirmButtonText: 'Si!',
-                showDenyButton: true,
-                denyButtonColor: '#adb5bd',
-                denyButtonText: 'No',
-                allowOutsideClick: false
-            }).then((result) => endTurn(result.isConfirmed, randomMovie.id))
-        }
-    }, 1000);
+            if (timeLeft == 0) {
+                clearInterval(timerInterval);
+                resolved(true);
+            }
+        }, 1000);
+    })
 }
 
 function calculateTimeFraction() {
@@ -74,7 +68,7 @@ document.getElementById("timerCountdown").innerHTML = `
       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
       <path
         id="base-timer-path-remaining"
-        stroke-dasharray="283"
+        stroke-dasharray="${FULL_DASH_ARRAY}"
         class="base-timer__path-remaining"
         d="
           M 50, 50
