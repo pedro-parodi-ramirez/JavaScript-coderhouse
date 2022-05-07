@@ -3,6 +3,9 @@
 La idea del trabajo integrador será una app para jugar al "Dígalo con Mímica".
 El programa contará con una lista de películas. Asignará una de ellas, de forma aleatoria, a cada equipo al llegar su turno. Al jugador que le toque del equipo en turno, deberá interpretar con mímica (sin hablar ni hacer ruidos o sonidos) la película asignada para que el resto de los integrantes de su equipo adivinen su nombre. Luego será el turno del siguiente equipo. El equipo que más películas adivine en el tiempo pactado entre los equipos será el ganador.
 
+# desafioEntregable 4
+Se incorpora 'fetch' al proyecto. Se genera una lista de 250 películas a partir de la API de IMDb. El proyecto tuvo grandes cambios de estilos, diseño y funcionalidad respecto a la última entrega. Muy próximo a la entrega final del proyecto.
+
 # desafíoComplentario 4 | desafíoEntregable 3
 Se incorporan al proyecto el operador NULLISH COALESCING y el operador lógico AND en el archivo 'movieList.js'.
 También se incoporan alertas con la librería SweetAlert2 para mostrar un mensaje de error cuando el ususario intenta agregar una película vacía o cuando la misma ya existe en la base de datos.
