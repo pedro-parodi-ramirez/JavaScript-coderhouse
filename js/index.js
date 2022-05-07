@@ -1,6 +1,6 @@
 const outputMovie = document.getElementById("outputMovie");
 const movieContainer = document.querySelector("#movie-container");
-const TIMER_VALUE = 5;
+const TIMER_VALUE = 1;
 
 let teamPlaying = "Azul";
 
@@ -32,12 +32,14 @@ function getMovie() {
 
     // Se capta la lista de películas del local storage
     let movieListCopy = getMovieListCopy(false);
-
+    
     // Se genera género de película de forma aleatoria
     const randomGenderIndex = Math.round(Math.random() * (moviesGenders.length - 1));
     const randomGender = moviesGenders[randomGenderIndex];
+    
     // Se selecciona todas las películas de ese género
-    const genderMovies = movieListCopy.filter((m) => m.gender == randomGender);
+    const genderMovies = movieListCopy.filter((m) => m.genderList.includes(randomGender));
+    
     // Se selecciona una película de forma aleatoria, del género correspondiente
     const randomMovieIndex = Math.round(Math.random() * (genderMovies.length - 1));
     const randomMovie = genderMovies[randomMovieIndex];
@@ -51,9 +53,9 @@ function getMovie() {
         <div class="card border-warning border-2 mb-3 bg-light h-100 border-warning">
             <img src=${randomMovie.img} class="card-img-top" alt="Not available">
             <div class="card-body">
-                <h5 class="card-title">${randomMovie.name}</h5>
-                <p class="card-text">Género: ${randomMovie.gender}<br>
-                                                Director: ${randomMovie.director}
+                <h4 class="card-title">${randomMovie.name}</h4>
+                <p class="card-text"><strong>Género:</strong> ${randomMovie.genderList.join(', ')}<br>
+                <strong>Reparto:</strong> ${randomMovie.starList.join(', ')}
                 </p>
             </div>
         </div>`;
@@ -121,6 +123,7 @@ function backToMenu() {
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
     document.getElementById("main-container").classList.add('background-image');
+    movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
 }
 
@@ -131,6 +134,13 @@ document.getElementById("addMovie").addEventListener("click", addMovie);
 function addMovie() {
     document.getElementById("addMovieInputs").classList.toggle('d-none');
     movieContainer.classList.add('d-none');
+    
+    // Se generan las opciones de géneros disponibles
+    let genderList = document.getElementById("movieGender");
+    genderList.innerHTML = "";
+    moviesGenders.forEach( (g) => {
+        genderList.innerHTML += `<option value=${g}>${g}</option>`;
+    })
 }
 
 document.getElementById("confirmAddMovie").addEventListener("click", confirmAdd);
@@ -147,11 +157,11 @@ function confirmAdd(e) {
     let error = checkMovieName(movieName);
 
     if (error == movieNameError.noError) {
-        let gender = document.getElementById("movieGender").value;
-        let director = document.getElementById("movieDirector").value;
+        let gender = [document.getElementById("movieGender").value];
+        let starList = [];
         let imgUrl = document.getElementById("imgUrl").value;
 
-        pushMovie(movieName, gender, director, imgUrl);
+        pushMovie(movieName, gender, starList, imgUrl); // starList no implementado - el reparto se agrega vacío
 
         document.getElementById("addMovieInputs").classList.add('d-none');
         listMovies();
@@ -206,10 +216,9 @@ function showMovieContainers() {
             <div class="card border-dark mb-3 bg-light h-100">
                 <img src=${m.img} class="card-img-top" alt="Not available">
                 <div class="card-body">
-                    <h5>${m.name}</h5>
-                    <p class="card-text">Género: ${m.gender}<br>
-                                            Director: ${m.director}
-                    </p>
+                    <h4>${m.name}</h4>
+                    <p class="card-text"><strong>Género:</strong> ${m.genderList.join(', ')}<br>
+                    <strong>Reparto:</strong> ${m.starList.join(', ')}</p>
                 </div>
                 <div class="d-flex align-self-center mb-2"><a id="borrar${m.id}" class="btn btn-warning">Borrar <ion-icon name="trash-outline" size="small"></ion-icon></a></div>
             </div>`;

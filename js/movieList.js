@@ -2,7 +2,66 @@
 /*************************************************** VARIABLES ****************************************************/
 /******************************************************************************************************************/
 
-// Se inicializan algunas películas
+// key : k_8fxkd9r4 IMBd
+
+/* const movieList = [];       // Lista de películas
+const moviesGenders = [];   // Géneros de películas */
+
+// ! Se inicializan variables segun local storage dado que se agoto por el dia las solicitudes de fetch a IMBd
+let movieList = getMovieListCopy(false);
+const moviesGenders = [];
+
+movieList.forEach((m) => {
+    if (m.genderList != null) {
+        for (gender of m.genderList) {
+            if ((moviesGenders.some((g) => g == gender) == false)) {
+                moviesGenders.push(gender);
+            }
+        }
+    }
+})
+
+/* const fetchData = async () => {
+    // Fetch películas de fantasía
+    const resp = await fetch('https://imdb-api.com/API/AdvancedSearch/k_8fxkd9r4?title_type=tv_movie&count=250');
+    const data = await resp.json();
+
+    let id = 0, imgLowQualityUlr, gender;
+    let genderList, starListForMovie;
+    for (m of data.results) {
+        genderList = [];
+        // Se rebaja la calidad de la imagen a linkear en cada película
+        imgLowQualityUlr = m.image.replace('original', '384x528');
+        
+        if (m.genreList != null) {
+            for(gender of m.genreList){
+                genderList.push(gender.value);
+                if ( (moviesGenders.some((g) => g == gender.value ) == false ) ){
+                    moviesGenders.push(gender.value);
+                }
+            }
+        }
+
+        (m.starList != null) && (starListForMovie = m.starList.map( (s) => s.name ));
+
+        movieList.push(new Movie(id++, m.title, genderList, starListForMovie, imgLowQualityUlr));
+    }
+
+    // Se guarda array en local storage
+    localStorage.setItem("movieList", JSON.stringify(movieList));
+}
+
+// Se captan datos de API IMBd
+fetchData(); */
+
+// Enumeración para validar nombre al intentar agregar una nueva película
+const movieNameError = {
+    noError: 0,
+    blankName: 1,
+    repeatedName: 2
+}
+
+/* // Se inicializan algunas películas
 let movieList = [
     new Movie(1, "El señor de los anillos", "Fantasía", "Peter Jackson", "./img/el_señor_de_los_anillos.jpg"),
     new Movie(2, "La dama en el agua", "Fantasía", "M. Night Shyamalan", "./img/la_dama_en_el_agua.jpg"),
@@ -24,20 +83,7 @@ let movieList = [
     new Movie(18, "Fiebre de sábado por la noche", "Drama", "John Badham", "./img/fiebre_de_sabado_por_la_noche.jpg"),
     new Movie(19, "La familia de mi novia", "Comedia", "Jay Roach", "./img/la_familia_de_mi_novia.jpg"),
     new Movie(20, "El juego del miedo", "Terror", "James Wan", "./img/el_juego_del_miedo.jpg")
-];
-
-// Se guarda array en local storage
-localStorage.setItem("movieList", JSON.stringify(movieList));
-
-// Géneros de películas
-const moviesGenders = ["Fantasía", "Ciencia ficción", "Película infantil", "Comedia", "Drama", "Suspenso", "Terror"];
-
-// Enumeración para validar nombre al intentar agregar una nueva película
-const movieNameError = {
-    noError: 0,
-    blankName: 1,
-    repeatedName: 2
-}
+]; */
 
 /******************************************************************************************************************/
 /**************************************************** MÉTODOS *****************************************************/
@@ -57,8 +103,8 @@ function serializer(arrayMovie, movieList) {
     arrayMovie.forEach(e => {
         movieList.push(new Movie(e.id,
             e.name,
-            e.gender,
-            e.director,
+            e.genderList,
+            e.starList,
             e.img));
     });
 }
@@ -79,12 +125,9 @@ function getMovieListCopy(sorted) {
 }
 
 // Agrega una película a la lista de películas
-function pushMovie(movieName, gender, director, imgUrl) {
-    // Se normaliza el formato
-    director = director.toLowerCase();
-    director = director.charAt(0).toUpperCase() + director.slice(1);
+function pushMovie(movieName, gender, starList, imgUrl) {
 
-    movieList.push(new Movie(movieList.length + 1, movieName, gender, director, imgUrl));
+    movieList.push(new Movie(movieList.length + 1, movieName, gender, starList, imgUrl));
 
     // Se agrega la nueva película al local storage
     localStorage.setItem("movieList", JSON.stringify(movieList));
