@@ -10,10 +10,8 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- Propios
-     -->
+    <!-- Propios -->
     <link rel="stylesheet" href="./css/styles.css">
-
 </head>
 
 <body>
@@ -40,15 +38,15 @@
             <!-- Menú principal -->
             <div id="mainOptions" class="d-grid gap-2 col-6 mx-auto">
                 <span class="d-flex justify-content-center"><a id="configMovies"
-                        class="btn btn-warning w-50 btn-lg disabled" aria-disabled="true">Configuración</a></span>
+                        class="btn btn-warning btn-lg w-50 disabled" aria-disabled="true">Configuración</a></span>
                 <span class="d-flex justify-content-center mt-2"><a id="initPlay"
-                        class="btn btn-warning w-50 btn-lg disabled" aria-disabled="true">Empezar a jugar</a></span>
+                        class="btn btn-warning btn-lg w-50 disabled" aria-disabled="true">Jugar</a></span>
             </div>
 
             <!-- Spinner -->
             <div id="spinner" class="d-flex justify-content-center my-5 pt-5 align-items-center">
                 <div class="spinner-border text-white" role="status"></div>
-                <span class="text-white fs-4 ms-2">Loading...</span>
+                <span class="text-white fs-4 ms-2">Cargando...</span>
             </div>
 
             <!-- Configuración de películas -->
@@ -104,17 +102,21 @@
                 <div
                     class="col col-3 h-100 border rounded-3 border-2 border-primary bg-primary p-2 text-white bg-opacity-50">
                     <h3 class="d-flex justify-content-center my-3">EQUIPO AZUL</h3>
-                    <h5 class="d-flex justify-content-center my-4">PUNTOS</h5>
-                    <output id="teamAzulScore" class="fs-1 d-flex justify-content-center mt-4 py-5"></output>
+                    <input type="number" id="teamAzulScore"
+                        class="fs-1 bg-primary bg-opacity-75 border border-white rounded-pill d-flex justify-content-center w-50 p-2 mx-auto my-5 text-center text-white" />
                 </div>
                 <div class="col col-6">
                     <div class="row align-items-center ps-4 mb-3">
                         <div class="row d-flex justify-content-center">
-                            <a id="buttonGetMovie" class="btn btn-warning w-50 btn-lg" aria-disabled="true">Buscar
+                            <a id="backToMenu_fromPlaying" class="btn btn-warning btn-lg w-50 mb-3"
+                                aria-disabled="true">Volver al menú</a>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <a id="buttonGetMovie" class="btn btn-warning btn-lg w-50" aria-disabled="true">Buscar
                                 película</a>
                         </div>
                         <div class="fs-3 row d-flex justify-content-center mt-4 text-white">
-                            <div class="col col-2 d-flex justify-content-center">
+                            <div class="col col-2 d-flex justify-content-center mb-2">
                                 <strong><i>Tiempo</i></strong>
                             </div>
                             <div id="timerCountdown" class="d-flex justify-content-center"></div>
@@ -127,8 +129,8 @@
                 <div
                     class="col col-3 h-100 border rounded-3 border-2 border-danger bg-danger p-2 text-white bg-opacity-50">
                     <h3 class="d-flex justify-content-center my-3">EQUIPO ROJO</h3>
-                    <h5 class="d-flex justify-content-center my-4">PUNTOS</h5>
-                    <output id="teamRojoScore" class="fs-1 d-flex justify-content-center mt-4 py-5"></output>
+                    <input type="number" id="teamRojoScore"
+                        class="fs-1 bg-danger bg-opacity-75 border border-white rounded-pill d-flex justify-content-center w-50 p-2 mx-auto my-5 text-center text-white" />
                 </div>
             </div>
 
@@ -147,7 +149,8 @@
                         debe
                         ir rotando en cada ronda. El equipo que primero logre llegar a la cantidad de puntos de victoria
                         pactados será el ganador.
-                        <br><i>Aclaración: el equipo que queda a la espera deberá permanecer en silencio, sin interferir
+                        <br><br><i>Aclaración: el equipo que queda a la espera deberá permanecer en silencio, sin
+                            interferir
                             en
                             la performance del equipo contrario. Sin embargo, podrá controlar el tiempo y señalar en
                             caso de
@@ -156,6 +159,8 @@
                             sonidos para clarificar su interpretación.<i>
                     </p>
                 </div>
+                <button id="backToMenu_2" type="button"
+                    class="btn btn-warning d-flex justify-content-center mx-auto mt-3">Volver</button>
             </div>
 
         </div>

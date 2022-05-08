@@ -17,10 +17,14 @@ document.getElementById('teamRojoScore').value = 0;
 
 document.getElementById('initPlay').addEventListener('click', () => {
     document.getElementById('panelPlay').classList.remove('d-none');
-    document.getElementById('configMovies').remove();
-    document.getElementById('initPlay').remove();
+    document.getElementById('mainOptions').classList.add('d-none');
     popSweetAlert("", `Turno del equipo ${teamPlaying.toLocaleUpperCase()}!`, "info", "Ok");
 });
+
+document.getElementById('backToMenu_fromPlaying').addEventListener("click", () => {
+    document.getElementById('panelPlay').classList.add('d-none');
+    document.getElementById('mainOptions').classList.remove('d-none');
+})
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
@@ -53,35 +57,25 @@ function getMovie() {
             </div>
         </div>`;
     outputMovie.appendChild(movieCard);
-    
+
     // Se inicia el temporizador
     startTimer()
         .then((resolved) => {
             if (resolved) {
                 Swal.fire({
                     title: "Timeout!",
-                    text: '¿La película fue adivinada?',
                     icon: 'warning',
+                    confirmButtonText: 'Ok',
                     confirmButtonColor: '#198754',
-                    confirmButtonText: 'Si!',
-                    showDenyButton: true,
-                    denyButtonColor: '#adb5bd',
-                    denyButtonText: 'No',
-                    allowOutsideClick: false
                 })
-                // La promesa resuelta marca el fin de turno
-                .then((result) => endTurn(result.isConfirmed, randomMovie.id))
+                .then(() => endTurn(randomMovie.id))
             }
         });
 }
 
-// endTurn() suma punto al equipo si corresponde y avanza el turno
-function endTurn(movieGuessed, outputMovieId) {
-    if (movieGuessed) {
-        let scoreTeam = team.find((t) => t.color === teamPlaying);
-        scoreTeam.score++;
-        document.getElementById(`team${teamPlaying}Score`).value++;
-    }
+// endTurn() avanza el turno
+function endTurn(outputMovieId) {
+    // Cambia el equipo jugador
     (teamPlaying === "Rojo") ? (teamPlaying = "Azul") : (teamPlaying = "Rojo");
 
     // Se muestra alerta del equipo que sigue
@@ -295,6 +289,11 @@ document.getElementById("btnHowToPlay").addEventListener("click", () => {
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
 })
+
+document.getElementById("backToMenu_2").addEventListener("click", () => {
+    document.querySelector('#textHowToPlay').classList.add('d-none');
+    document.getElementById("mainOptions").classList.remove('d-none');
+});
 
 /******************************************************************************************************************/
 /************************************************** METODOS *******************************************************/
