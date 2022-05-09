@@ -2,10 +2,12 @@ const outputMovie = document.getElementById("outputMovie");
 const movieContainer = document.querySelector("#movie-container");
 
 let teamPlaying = "Azul";
+let playOnCurse = false;
 
+// Se crean variables de cada equipo, aunque no tienen uso real en la aplicación
 const team = [
-    { id: 1, color: "Azul", score: 0 },
-    { id: 2, color: "Rojo", score: 0 }
+    { id: 0, color: "Azul", score: 0 },
+    { id: 1, color: "Rojo", score: 0 }
 ]
 
 document.getElementById('teamAzulScore').value = 0;
@@ -24,11 +26,15 @@ document.getElementById('initPlay').addEventListener('click', () => {
 document.getElementById('backToMenu_fromPlaying').addEventListener("click", () => {
     document.getElementById('panelPlay').classList.add('d-none');
     document.getElementById('mainOptions').classList.remove('d-none');
+
+    // Se cancela la jugada si es que ya está en curso
+    playOnCurse && cancelTurn();
 })
 
 document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
 function getMovie() {
+    playOnCurse = true;
     document.getElementById('main-container').classList.remove('vh-100');
 
     // Se inhabilita el botón de buscar película hasta próximo turno
@@ -68,48 +74,35 @@ function getMovie() {
                     confirmButtonText: 'Ok',
                     confirmButtonColor: '#198754',
                 })
-                .then(() => endTurn(randomMovie.id))
+                    .then(() => endTurn(randomMovie.id))
             }
         });
 }
 
-// endTurn() avanza el turno
-function endTurn(outputMovieId) {
-    // Cambia el equipo jugador
-    (teamPlaying === "Rojo") ? (teamPlaying = "Azul") : (teamPlaying = "Rojo");
-
-    // Se muestra alerta del equipo que sigue
-    popSweetAlert("", `Turno del equipo ${teamPlaying.toLocaleUpperCase()}!`, "info", "Ok");
-
-    // Se vuelve a habilitar el botón de buscar película
-    document.getElementById("buttonGetMovie").classList.remove('disabled');
-
-    // Se elimina la película para que no pueda ser seleccionada nuevamente
-    deleteMovie(outputMovieId);
-    outputMovie.innerHTML = "";
-
-    // Se muestra timer en su valor inicial
-    document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
-
-    document.getElementById('main-container').classList.add('vh-100');
+document.querySelector('#teamAzulScore').addEventListener('change', () => updateScore("teamAzul"));
+document.querySelector('#teamRojoScore').addEventListener('change', () => updateScore("teamRojo"));
+// updateScore() actualiza los puntos del equipo en cuestión
+function updateScore(updateTeam) {
+    console.log("TEST");
+    if (updateTeam == "teamAzul") {
+        team[0].score = document.querySelector('#teamAzulScore').value;
+    } else if (updateTeam == "teamRojo") {
+        team[1].score = document.querySelector('#teamRojoScore').value;
+    }
 }
 
 /******************************************************************************************************************/
 /*********************************************** MENU PELICULAS ***************************************************/
 /******************************************************************************************************************/
 
-document.getElementById("configMovies").addEventListener("click", showMoviesOptions);
-// showMoviesOptions() muestra las opciones disponibles para la lista de películas
-function showMoviesOptions() {
+document.getElementById("configMovies").addEventListener("click", () => {
     outputMovie.innerHTML = "";
     document.getElementById('panelPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.add('d-none');
     document.getElementById("moviesOptions").classList.remove('d-none');
-}
+})
 
-document.getElementById("backToMenu").addEventListener("click", backToMenu);
-// backToMenu() vuelve al menu principal, similar al hacer click en 'Inicio'
-function backToMenu() {
+document.getElementById("backToMenu_fromConfig").addEventListener("click", () => {
     document.getElementById("moviesOptions").classList.add('d-none');
     document.getElementById("timeLimitInput").classList.add('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
@@ -118,7 +111,7 @@ function backToMenu() {
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
-}
+});
 
 /************************************************ TIEMPO DE TURNO ************************************************/
 
@@ -142,7 +135,12 @@ function changeTimeLimit() {
         popSweetAlert("", "Listo.", "success", "Ok");
         document.getElementById("timeLimitInput").classList.add('d-none');
     } else {
-        popSweetAlert("Error!", "El número debe ser entero y mayor a cero.", "error", "Cerrar");
+        Toastify({
+            text: "El número debe ser entero y mayor a cero.",
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+        }).showToast();
     }
 }
 
@@ -199,20 +197,6 @@ function confirmAdd(e) {
         popSweetAlert("", "Película agregada!", "success", "Cerrar");
     } else {
         popError(error);
-    }
-}
-
-// Muestra un Sweet Alert según el error
-function popError(error) {
-    switch (error) {
-        case movieNameError.blankName:
-            popSweetAlert("Error!", "La película debe contener un nombre", "error", "Cerrar");
-            break;
-        case movieNameError.repeatedName:
-            popSweetAlert("Error!", "Esa película ya existe.", "error", "Cerrar");
-            break;
-        default:
-            break;
     }
 }
 
@@ -288,17 +272,21 @@ document.getElementById("btnHowToPlay").addEventListener("click", () => {
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
+
+    // Se cancela la jugada si es que ya está en curso
+    playOnCurse && cancelTurn();
 })
 
-document.getElementById("backToMenu_2").addEventListener("click", () => {
+document.getElementById("backToMenu_fromAboutGame").addEventListener("click", () => {
     document.querySelector('#textHowToPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
 });
 
 /******************************************************************************************************************/
-/************************************************** METODOS *******************************************************/
+/************************************************* MÉTODOS ********************************************************/
 /******************************************************************************************************************/
 
+// popSweetAlert() Muestra un Sweet Alert 2 según parámetros
 function popSweetAlert(_title, _text, _icon, _confirmButtonText) {
     Swal.fire({
         title: _title,
@@ -308,4 +296,75 @@ function popSweetAlert(_title, _text, _icon, _confirmButtonText) {
         confirmButtonColor: '#198754',
         allowOutsideClick: false
     })
+}
+
+// popError() muestra un Toastify según el error, se usa solo al momento de intentar agregar una película al repertorio
+function popError(error) {
+    switch (error) {
+        case movieNameError.blankName:
+            Toastify({
+                text: "Ingrese un nombre para la película.",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
+            break;
+        case movieNameError.repeatedName:
+            Toastify({
+                text: "Esa película ya existe.",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
+            break;
+        default:
+            break;
+    }
+}
+
+// cancelTurn() cancela una jugada en curso
+function cancelTurn() {
+    // Se resetea el timer
+    clearInterval(timerInterval);
+    document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
+    document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", FULL_DASH_ARRAY);
+
+    // Se elimina de pantalla la película
+    outputMovie.innerHTML = "";
+    document.getElementById('main-container').classList.add('vh-100');
+
+    // Se habilita el botón de buscar película
+    document.getElementById("buttonGetMovie").classList.remove('disabled');
+
+    // Se da aviso de turno cancelado
+    Toastify({
+        text: "El turno ha sido cancelado.",
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+    }).showToast();
+
+    playOnCurse = false;
+}
+
+// endTurn() avanza el turno
+function endTurn(outputMovieId) {
+    // Cambia el equipo jugador
+    (teamPlaying === "Rojo") ? (teamPlaying = "Azul") : (teamPlaying = "Rojo");
+
+    // Se muestra alerta del equipo que sigue
+    popSweetAlert("", `Turno del equipo ${teamPlaying.toLocaleUpperCase()}!`, "info", "Ok");
+
+    // Se vuelve a habilitar el botón de buscar película
+    document.getElementById("buttonGetMovie").classList.remove('disabled');
+
+    // Se elimina la película para que no pueda ser seleccionada nuevamente
+    deleteMovie(outputMovieId);
+    outputMovie.innerHTML = "";
+
+    // Se muestra timer en su valor inicial
+    document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
+
+    playOnCurse = false;
+    document.getElementById('main-container').classList.add('vh-100');
 }
