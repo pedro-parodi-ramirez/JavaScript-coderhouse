@@ -5,7 +5,7 @@
 // key IMDb   : k_8fxkd9r4
 // key IMDb 2 : k_aaaaaaaa
 
-const movieList = [];       // Lista de películas
+/* const movieList = [];       // Lista de películas
 const moviesGenders = [];   // Géneros de películas
 
 const IMG_QLTY = '192x264'; // [192x264, 384x528, ..., original]
@@ -49,14 +49,14 @@ const IMG_QLTY = '192x264'; // [192x264, 384x528, ..., original]
 }
 
 // Se captan datos de API IMDb
-fetchData();
+fetchData(); */
 
 // ! El servidor IMDb permite 100 consultas al día de forma gratuita
 // ! Para limitar las consultas al servidor, se puede ejecutar un fetch y luego trabajar con localStorage.
 // ! Para ello, ejecutar una única vez la app con el código de arriba y luego comentarlo.
 // ! Finalmente, descomentar este código para poder utilizar la app con normalidad.
 
-/* let movieList = getMovieListCopy(false);
+let movieList = getMovieListCopy(false);
 const moviesGenders = [];
 
 movieList.forEach((m) => {
@@ -78,7 +78,7 @@ new Promise((resolved) => {
 })
     .then(() => {
         document.getElementById('spinner').remove();
-    }) */
+    })
 
 // ! Comentar/descomentar hasta este punto
 
