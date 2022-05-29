@@ -35,7 +35,6 @@ document.getElementById("buttonGetMovie").addEventListener("click", getMovie);
 // getMovie() selecciona una película de las lista de películas de forma aleatoria
 function getMovie() {
     playOnCurse = true;
-    document.getElementById('main-container').classList.remove('vh-100');
 
     // Se inhabilita el botón de buscar película hasta próximo turno
     document.getElementById("buttonGetMovie").classList.add('disabled');
@@ -107,7 +106,6 @@ document.getElementById("backToMenu_fromConfig").addEventListener("click", () =>
     document.getElementById("timeLimitInput").classList.add('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
-    document.getElementById('main-container').classList.add('vh-100');
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
@@ -119,7 +117,6 @@ document.getElementById('btnTimeLimit').addEventListener("click", () => {
     document.getElementById("timeLimitInput").classList.toggle('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     movieContainer.classList.add('d-none');
-    document.getElementById('main-container').classList.add('vh-100');
 
     document.getElementById('timeLimitValue').value = "";
 });
@@ -152,7 +149,6 @@ function addMovie() {
     document.getElementById("addMovieInputs").classList.toggle('d-none');
     document.getElementById("timeLimitInput").classList.add('d-none');
     movieContainer.classList.add('d-none');
-    document.getElementById('main-container').classList.add('vh-100');
 
     // Se generan las opciones de géneros disponibles
     let genderList = document.getElementById("movieGender");
@@ -208,7 +204,6 @@ function listMovies() {
     movieContainer.classList.toggle('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("timeLimitInput").classList.add('d-none');
-    document.getElementById('main-container').classList.toggle('vh-100');
 
     showMovieContainers();
 }
@@ -268,10 +263,11 @@ document.getElementById("btnHowToPlay").addEventListener("click", () => {
     document.getElementById("timeLimitInput").classList.add('d-none');
     document.getElementById("addMovieInputs").classList.add('d-none');
     document.getElementById("panelPlay").classList.add('d-none');
-    document.getElementById("main-container").classList.add('vh-100');
     document.querySelector("#addMovieInputs").reset();
     movieContainer.classList.add('d-none');
     movieContainer.innerHTML = "";
+
+    (document.getElementById("spinner") != null) && document.getElementById("spinner").classList.add('d-none');
 
     // Se cancela la jugada si es que ya está en curso
     playOnCurse && cancelTurn();
@@ -280,6 +276,7 @@ document.getElementById("btnHowToPlay").addEventListener("click", () => {
 document.getElementById("backToMenu_fromAboutGame").addEventListener("click", () => {
     document.querySelector('#textHowToPlay').classList.add('d-none');
     document.getElementById("mainOptions").classList.remove('d-none');
+    (document.getElementById("spinner") != null) && document.getElementById("spinner").classList.remove('d-none');
 });
 
 /******************************************************************************************************************/
@@ -331,7 +328,6 @@ function cancelTurn() {
 
     // Se elimina de pantalla la película
     outputMovie.innerHTML = "";
-    document.getElementById('main-container').classList.add('vh-100');
 
     // Se habilita el botón de buscar película
     document.getElementById("buttonGetMovie").classList.remove('disabled');
@@ -366,5 +362,4 @@ function endTurn(outputMovieId) {
     document.getElementById("base-timer-label").innerHTML = formatTime(TIME_LIMIT);
 
     playOnCurse = false;
-    document.getElementById('main-container').classList.add('vh-100');
 }
