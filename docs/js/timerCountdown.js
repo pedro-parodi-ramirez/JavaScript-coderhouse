@@ -1,5 +1,5 @@
-// Start with an initial value of 20 seconds
-let TIME_LIMIT = 5;
+// Tiempo de cada turno
+let TIME_LIMIT = 120;
 
 const FULL_DASH_ARRAY = 283
 
