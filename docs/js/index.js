@@ -82,7 +82,6 @@ document.querySelector('#teamAzulScore').addEventListener('change', () => update
 document.querySelector('#teamRojoScore').addEventListener('change', () => updateScore("teamRojo"));
 // updateScore() actualiza los puntos del equipo en cuestión
 function updateScore(updateTeam) {
-    console.log("TEST");
     if (updateTeam == "teamAzul") {
         team[0].score = document.querySelector('#teamAzulScore').value;
     } else if (updateTeam == "teamRojo") {
